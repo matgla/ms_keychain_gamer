@@ -1,0 +1,8 @@
+
+int main()
+{
+    while (true)
+    {
+
+    }
+}

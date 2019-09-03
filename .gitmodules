@@ -1,0 +1,3 @@
+[submodule "lib/msos"]
+	path = lib/msos
+	url = https://github.com/matgla/msos.git
