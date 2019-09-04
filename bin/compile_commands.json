@@ -1,0 +1,72 @@
+[
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/src/common",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/interface    -mmcu=attiny85 -o CMakeFiles/hal_common.dir/empty.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/src/common/empty.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/src/common/empty.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/src/common/timer",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -DLOG_LEVEL_DISABLED -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/interface -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/hal_common_time.dir/timer_manager.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/src/common/timer/timer_manager.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/src/common/timer/timer_manager.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/eul/source/logger",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -DLOG_LEVEL_DISABLED -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/eul_logger.dir/logger_factory.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_factory.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_factory.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/eul/source/logger",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -DLOG_LEVEL_DISABLED -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/eul_logger.dir/logger_printer.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_printer.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_printer.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/eul/source/logger",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -DLOG_LEVEL_DISABLED -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/eul_logger.dir/logger_stream_registry.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_stream_registry.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_stream_registry.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/eul/source/logger",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -DLOG_LEVEL_DISABLED -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/eul_logger.dir/logger_stream.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_stream.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/logger/logger_stream.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/eul/source/utils",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/eul_utils.dir/math.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/utils/math.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/utils/math.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/eul/source/utils",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include    -mmcu=attiny85 -std=c++2a -Wall -Werror -o CMakeFiles/eul_utils.dir/string.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/utils/string.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source/utils/string.cpp"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/avr_libstdcpp",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/include    -mmcu=attiny85 -o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/chrono.cc.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/chrono.cc",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/chrono.cc"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/avr_libstdcpp",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/include    -mmcu=attiny85 -o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/functexcept.cc.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/functexcept.cc",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/functexcept.cc"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/avr_libstdcpp",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/include    -mmcu=attiny85 -o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/hash_bytes.cc.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/hash_bytes.cc",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/hash_bytes.cc"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/avr_libstdcpp",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/include    -mmcu=attiny85 -o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/limits.cc.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/limits.cc",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/limits.cc"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/lib/msos/lib/hal/lib/avr_libstdcpp",
+  "command": "/usr/local/bin/avr-g++  -DF_CPU=1000000 -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/include    -mmcu=attiny85 -o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/nothrow.cc.o -c /mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/nothrow.cc",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/src/nothrow.cc"
+},
+{
+  "directory": "/mnt/c/data/repos/ms_keychain_gamer/bin/src",
+  "command": "/usr/local/bin/avr-g++  -DLOG_LEVEL_DISABLED -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/interface -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/lib/gsl/gsl/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/avr_libstdcpp/avr_libstdcpp/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/include -I/mnt/c/data/repos/ms_keychain_gamer/lib/msos/lib/hal/lib/eul/source    -std=c++2a -Wall -Werror -o CMakeFiles/ms_keychain_gamer.dir/main.cpp.o -c /mnt/c/data/repos/ms_keychain_gamer/src/main.cpp",
+  "file": "/mnt/c/data/repos/ms_keychain_gamer/src/main.cpp"
+}
+]

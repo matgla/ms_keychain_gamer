@@ -12,6 +12,6 @@ function(add_device_hal_library hal_device_library)
     add_library(${hal_device_library} INTERFACE)
 
     target_sources(${hal_device_library} INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/board.hpp
+        ${user_boards_path}/keychain_gamer/board.hpp
     )
 endfunction()

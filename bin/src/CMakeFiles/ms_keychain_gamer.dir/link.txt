@@ -1,0 +1,1 @@
+/usr/local/bin/avr-g++     CMakeFiles/ms_keychain_gamer.dir/main.cpp.o  -o ms_keychain_gamer ../lib/msos/lib/hal/src/common/libhal_common.a ../lib/msos/lib/hal/src/common/timer/libhal_common_time.a ../lib/msos/lib/hal/lib/avr_libstdcpp/libavr_libstdcpp.a ../lib/msos/lib/hal/lib/eul/libeul.a ../lib/msos/lib/hal/lib/eul/libeul.a -Wl,--whole-archive -Wl,--no-whole-archive 

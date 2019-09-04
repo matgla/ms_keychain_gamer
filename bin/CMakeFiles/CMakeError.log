@@ -1,0 +1,582 @@
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--ec++'; did you mean '-Weffc++'?
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--ec++'; did you mean '-Weffc++'?
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-g++: fatal error: no input files
+compilation terminated.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-g++: fatal error: no input files
+compilation terminated.
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-gcc: fatal error: no input files
+compilation terminated.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-gcc: fatal error: no input files
+compilation terminated.
+Determining if the CXX compiler works failed with the following output:
+Change Dir: /mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_25185/fast 
+/usr/bin/make -f CMakeFiles/cmTC_25185.dir/build.make CMakeFiles/cmTC_25185.dir/build
+make[1]: Entering directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_25185.dir/testCXXCompiler.cxx.o
+/usr/local/bin/avr-g++     -o CMakeFiles/cmTC_25185.dir/testCXXCompiler.cxx.o -c /mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+as: unrecognized option '-mmcu=avr2'
+CMakeFiles/cmTC_25185.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_25185.dir/testCXXCompiler.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_25185.dir/testCXXCompiler.cxx.o] Error 1
+make[1]: Leaving directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_25185/fast' failed
+make: *** [cmTC_25185/fast] Error 2
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--ec++'; did you mean '-Weffc++'?
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--ec++'; did you mean '-Weffc++'?
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-g++: fatal error: no input files
+compilation terminated.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-g++: fatal error: no input files
+compilation terminated.
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-gcc: fatal error: no input files
+compilation terminated.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-gcc: fatal error: no input files
+compilation terminated.
+Determining if the CXX compiler works failed with the following output:
+Change Dir: /mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_2dbc8/fast 
+/usr/bin/make -f CMakeFiles/cmTC_2dbc8.dir/build.make CMakeFiles/cmTC_2dbc8.dir/build
+make[1]: Entering directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2dbc8.dir/testCXXCompiler.cxx.o
+/usr/local/bin/avr-g++     -o CMakeFiles/cmTC_2dbc8.dir/testCXXCompiler.cxx.o -c /mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+as: unrecognized option '-mmcu=avr2'
+CMakeFiles/cmTC_2dbc8.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_2dbc8.dir/testCXXCompiler.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_2dbc8.dir/testCXXCompiler.cxx.o] Error 1
+make[1]: Leaving directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_2dbc8/fast' failed
+make: *** [cmTC_2dbc8/fast] Error 2
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--ec++'; did you mean '-Weffc++'?
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/local/bin/avr-g++ 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+avr-g++: error: unrecognized command line option '--ec++'; did you mean '-Weffc++'?
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-g++: fatal error: no input files
+compilation terminated.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-g++: fatal error: no input files
+compilation terminated.
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /usr/local/bin/avr-gcc 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+as: unrecognized option '-mmcu=avr2'
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-gcc: fatal error: no input files
+compilation terminated.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+avr-gcc: fatal error: no input files
+compilation terminated.
+Detecting CXX compiler ABI info failed to compile with the following output:
+Change Dir: /mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_dc46c/fast 
+/usr/bin/make -f CMakeFiles/cmTC_dc46c.dir/build.make CMakeFiles/cmTC_dc46c.dir/build
+make[1]: Entering directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_dc46c.dir/CMakeCXXCompilerABI.cpp.o
+/usr/local/bin/avr-g++     -o CMakeFiles/cmTC_dc46c.dir/CMakeCXXCompilerABI.cpp.o -c /opt/cmake-3.14.0-Linux-x86_64/share/cmake-3.14/Modules/CMakeCXXCompilerABI.cpp
+as: unrecognized option '-mmcu=avr2'
+CMakeFiles/cmTC_dc46c.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_dc46c.dir/CMakeCXXCompilerABI.cpp.o' failed
+make[1]: *** [CMakeFiles/cmTC_dc46c.dir/CMakeCXXCompilerABI.cpp.o] Error 1
+make[1]: Leaving directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_dc46c/fast' failed
+make: *** [cmTC_dc46c/fast] Error 2
+
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_53d1c/fast 
+/usr/bin/make -f CMakeFiles/cmTC_53d1c.dir/build.make CMakeFiles/cmTC_53d1c.dir/build
+make[1]: Entering directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_53d1c.dir/CMakeCCompilerABI.c.o
+/usr/local/bin/avr-gcc    -o CMakeFiles/cmTC_53d1c.dir/CMakeCCompilerABI.c.o   -c /opt/cmake-3.14.0-Linux-x86_64/share/cmake-3.14/Modules/CMakeCCompilerABI.c
+as: unrecognized option '-mmcu=avr2'
+CMakeFiles/cmTC_53d1c.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_53d1c.dir/CMakeCCompilerABI.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_53d1c.dir/CMakeCCompilerABI.c.o] Error 1
+make[1]: Leaving directory '/mnt/c/data/repos/ms_keychain_gamer/bin/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_53d1c/fast' failed
+make: *** [cmTC_53d1c/fast] Error 2
+
+
+

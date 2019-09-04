@@ -1,0 +1,2 @@
+/usr/bin/ar qc libeul.a  source/logger/CMakeFiles/eul_logger.dir/logger_factory.cpp.o source/logger/CMakeFiles/eul_logger.dir/logger_printer.cpp.o source/logger/CMakeFiles/eul_logger.dir/logger_stream_registry.cpp.o source/logger/CMakeFiles/eul_logger.dir/logger_stream.cpp.o source/utils/CMakeFiles/eul_utils.dir/math.cpp.o source/utils/CMakeFiles/eul_utils.dir/string.cpp.o
+/usr/bin/ranlib libeul.a
