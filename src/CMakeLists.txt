@@ -10,3 +10,6 @@ target_link_libraries(${target_name}
     PRIVATE
         msos
 )
+
+include(GenerateBinary)
+generate_binary(${target_name} ${vendor})

@@ -14,7 +14,6 @@ project(MsKeychainGamer CXX)
 if (NOT MS_KEYCHAIN_GAMER_BUILD_TESTS)
     message (STATUS "Building: target")
     add_subdirectory(src)
-
 else ()
     message (STATUS "Building: test")
 endif ()
