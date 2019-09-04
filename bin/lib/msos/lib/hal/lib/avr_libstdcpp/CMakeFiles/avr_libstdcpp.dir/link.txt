@@ -1,2 +1,0 @@
-/usr/bin/ar qc libavr_libstdcpp.a  CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/chrono.cc.o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/functexcept.cc.o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/hash_bytes.cc.o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/limits.cc.o CMakeFiles/avr_libstdcpp.dir/avr_libstdcpp/src/nothrow.cc.o
-/usr/bin/ranlib libavr_libstdcpp.a

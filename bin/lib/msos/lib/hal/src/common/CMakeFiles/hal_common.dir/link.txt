@@ -1,2 +1,0 @@
-/usr/bin/ar qc libhal_common.a  CMakeFiles/hal_common.dir/empty.cpp.o
-/usr/bin/ranlib libhal_common.a
