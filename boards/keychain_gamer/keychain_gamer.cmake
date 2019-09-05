@@ -14,4 +14,15 @@ function(add_device_hal_library hal_device_library)
     target_sources(${hal_device_library} INTERFACE
         ${user_boards_path}/keychain_gamer/board.hpp
     )
+
+    target_include_directories(${hal_device_library} INTERFACE
+        ${user_boards_path}/keychain_gamer)
+
+    add_subdirectory(${PROJECT_SOURCE_DIR}/src/avr)
+
+    target_link_libraries(${hal_device_library}
+        INTERFACE
+            hal_interface
+            hal_avr
+    )
 endfunction()
