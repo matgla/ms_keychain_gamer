@@ -5,7 +5,7 @@ int main()
 {
     while (true)
     {
-        board::gpio::LEFT_BUTTON::init(hal::gpio::Output::OutputPushPull, hal::gpio::Speed::Default);
-        board::gpio::LEFT_BUTTON::setHigh();
+        board::gpio::LED_GREEN::init(hal::gpio::Output::OutputPushPull, hal::gpio::Speed::Default);
+        board::gpio::LED_GREEN::setHigh();
     }
 }

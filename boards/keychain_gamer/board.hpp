@@ -9,7 +9,7 @@
 
 #include <hal/gpio/gpio.hpp>
 #include <avr/common/gpio/avr_gpio.hpp>
-#include <avr/attiny85/gpio/ports.hpp>
+#include <avr/common/gpio/ports/avr_port_b.hpp>
 
 namespace board
 {
