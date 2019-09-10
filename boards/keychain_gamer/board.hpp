@@ -5,17 +5,15 @@
 
 // i2c connectors
 
-#include <avr/io.h>
-
-#include <hal/gpio/gpio.hpp>
-#include <avr/common/gpio/avr_gpio.hpp>
-#include <avr/common/gpio/ports/avr_port_b.hpp>
+#include <devices/avr/attiny/attiny85/gpio.hpp>
 
 namespace board
 {
 namespace gpio
 {
-using LEFT_BUTTON = hal::gpio::Gpio<hal::avr::gpio::AvrGpio<hal::avr::gpio::AvrPortB, 0>>;
+using BUTTON_LEFT = hal::devices::gpio::PB1::InputType;
+using LED_GREEN = hal::devices::gpio::PB3::OutputType;
+using BUTTON_RIGHT = hal::devices::gpio::PB4::InputType;
 }
 }
 

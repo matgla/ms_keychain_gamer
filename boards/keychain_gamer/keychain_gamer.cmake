@@ -8,6 +8,7 @@ endfunction()
 
 function(add_device_hal_library hal_device_library)
     set(${hal_device_library} "avr_keychain_gamer")
+    target_compile_definitions(avr INTERFACE "-DF_CPU=8000000")
     set(hal_device_library ${hal_device_library} PARENT_SCOPE)
     add_library(${hal_device_library} INTERFACE)
 
@@ -18,11 +19,12 @@ function(add_device_hal_library hal_device_library)
     target_include_directories(${hal_device_library} INTERFACE
         ${user_boards_path}/keychain_gamer)
 
-    add_subdirectory(${PROJECT_SOURCE_DIR}/src/avr)
+        include(${PROJECT_SOURCE_DIR}/devices/avr/attiny/attiny85/configure_attiny85.cmake)
 
     target_link_libraries(${hal_device_library}
         INTERFACE
             hal_interface
-            hal_avr
+            hal_devices_avr_attiny85
     )
+
 endfunction()

@@ -8,6 +8,7 @@ endfunction()
 
 function(add_device_hal_library hal_device_library)
     set(${hal_device_library} "avr_keychain_gamer")
+    target_compile_definitions(avr INTERFACE "-DF_CPU=16000000")
     set(hal_device_library ${hal_device_library} PARENT_SCOPE)
     add_library(${hal_device_library} INTERFACE)
 

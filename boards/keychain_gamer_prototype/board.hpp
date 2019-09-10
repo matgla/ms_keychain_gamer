@@ -19,6 +19,11 @@ using LED_RED = hal::devices::gpio::PC1::OutputType;
 using LED_YELLOW = hal::devices::gpio::PC0::OutputType;
 using LED_BLUE = hal::devices::gpio::PB1::OutputType;
 }
+namespace interfaces
+{
+using LCD_I2C = hal::devices::interfaces::I2C_1;
+using SERIAL = hal::devices::interfaces::USART;
+}
 }
 
 
