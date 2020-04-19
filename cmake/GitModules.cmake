@@ -1,3 +1,19 @@
+# This file is part of MS Keychain Gamer project. This is tiny game console.
+# Copyright (C) 2019 Mateusz Stadnik
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 function (execute_command command_to_execute working_directory)
     message (STATUS "Executing: `${command_to_execute}` inside ${working_directory}")
     find_package(Git QUIET)
@@ -41,7 +57,7 @@ function (fetch_module_via_tag_or_branch module_name module_path working_directo
     string(SUBSTRING ${module_name} ${target_name_begin} ${target_name_length} target_name)
 
     if (NOT TARGET ${target_name})
-        if (DEFINED ENV{NO_DEPS_UPDATE})
+        if (DEFINED ENV{NO_DEPS_UPDATE} OR DEFINED NO_DEPS_UPDATE)
             message (STATUS "Updating dependencies disabled!")
             add_subdirectory(${module_path})
             return()
@@ -68,11 +84,12 @@ function (fetch_module_via_tag_or_branch module_name module_path working_directo
 
         if (NOT ${module_path} STREQUAL "")
             if (NOT ${branch} STREQUAL "")
-                execute_command("git checkout ${branch}" "${PROJECT_SOURCE_DIR}/${module_name}")
-                execute_command("git pull" "${PROJECT_SOURCE_DIR}/${module_name}")
+                execute_command("git checkout ${branch}" "${working_directory}/${module_name}")
+                execute_command("git pull" "${working_directory}/${module_name}")
                 add_subdirectory(${module_path})
             elseif (NOT ${tag} STREQUAL "")
-                execute_command("git checkout ${tag}" "${PROJECT_SOURCE_DIR}/${module_name}")
+                execute_command("git fetch" "${PROJECT_SOURCE_DIR}/${module_name}")
+                execute_command("git checkout ${tag}" "${working_directory}/${module_name}")
                 add_subdirectory(${module_path})
             endif ()
         endif ()

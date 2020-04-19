@@ -1,106 +1,161 @@
-#include <hal/time/sleep.hpp>
-#include <board.hpp>
+#include <msos/apps/app_registry.hpp>
 
-#include <msos/drivers/displays/ssd1306/ssd1306.hpp>
+#include <msos/libc/printf.hpp>
+
+#include <cstring>
+#include <cmath>
+
 #include <msgui/Factory.hpp>
-#include <msgui/FrameBuffer.hpp>
-#include <msgui/fonts/Font5x7.hpp>
 #include <msgui/policies/chunk/SSD1308ChunkPolicy.hpp>
-#include <msgui/policies/data/FlashMemoryPolicy.hpp>
-#include <avr/pgmspace.h>
+#include <msgui/policies/data/DefaultMemoryPolicy.hpp>
+#include "msgui/fonts/Font5x7.hpp"
 
-constexpr msgui::fonts::Font5x7Type PROGMEM font = msgui::fonts::createFont();
+#include <fcntl.h>
 
-int freeRam () {
-  extern int __heap_start, *__brkval;
-  int v;
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+#include "drivers/event.hpp"
+
+namespace
+{
+
+bool read_event(int fd, drivers::GamepadEvent* event)
+{
+    std::size_t bytes;
+    bytes = read(fd, event, sizeof(drivers::GamepadEvent));
+    if (bytes == sizeof(drivers::GamepadEvent))
+    {
+        return true;
+    }
+    return false;
 }
 
-int main()
+class FbDevice
 {
-    board::gpio::LED_GREEN::init(hal::gpio::Output::OutputPushPull, hal::gpio::Speed::Default);
-    board::gpio::LED_GREEN::setHigh();
-    using Serial = board::interfaces::SERIAL;
-    Serial::template init<hal::devices::interfaces::USART_1_RX, hal::devices::interfaces::USART_1_TX>(9600);
-    Serial::write("Staring LCD initialization\n");
-    msos::drivers::displays::SSD1306_I2C<board::interfaces::LCD_I2C> lcd;
+public:
+    FbDevice(int fd)
+        : fd_(fd)
+    {
+        std::memset(buffer_, 0, sizeof(buffer_));
+    }
 
-    lcd.clear();
-    char data[20];
-    itoa(freeRam(), data, 10);
-    Serial::write("Free ram: ");
-    Serial::write(data);
-    Serial::write("\n");
+    int height()
+    {
+        return 128;
+    }
 
-    // msgui::FrameBuffer<decltype(lcd), 128, 64> frame_buffer(lcd);
+    int width()
+    {
+        return 64;
+    }
 
-    Serial::write("Created frame buffer\n");
+    void write(uint8_t byte)
+    {
+        ::write(fd_, &byte, 1);
+    }
 
-    msgui::Factory<decltype(lcd), msgui::policies::data::FlashMemoryPolicy<uint8_t>, msgui::policies::chunk::ChunkPolicy, msgui::policies::chunk::SSD1308ChunkPolicyParameters> factory(lcd);
-    Serial::write("Created factory\n");
+    void set_pixel(int x, int y)
+    {
+        if (x >= height() || y >= width() || x < 0 || y < 0)
+        {
+            return;
+        }
+        int position_in_buffer = x + std::floor(y / 8) * 64;
+        buffer_[position_in_buffer] |= 1 << (y % 8);
+    }
 
-    const auto text = factory.make_text("To kiedys", font, {0, 0});
-    const auto text2 = factory.make_text("bedzie brelokiem", font, {10, 4});
-    const auto text3 = factory.make_text("mojej Asi   :*", font, {18, 8});
-    // const auto text2 = factory.make_text("My World!", font, {50, 0});
-    // const auto text3 = factory.make_text("Maybe positioning not!", font, {50, 0});
+    // void clear_pixel(int x, int y)
+    // {
+    //     if (x >= height() || y >= width() || x < 0 || y < 0)
+    //     {
+    //         return;
+    //     }
+    //     int position_in_buffer = std::floor(x / 8) + y * (128/8);
+    //     buffer_[position_in_buffer] &= ~(1 << (x % 8));
+    // }
 
-    // const auto h_bitmap = factory.make_bitmap<5, 7>(
-    //     1, 0, 0, 0, 1,
-    //     1, 0, 0, 0, 1,
-    //     1, 0, 0, 0, 1,
-    //     1, 1, 1, 1, 1,
-    //     1, 0, 0, 0, 1,
-    //     1, 0, 0, 0, 1,
-    //     1, 0, 0, 0, 1
-    // );
+    void sync()
+    {
+        for (auto byte : buffer_)
+        {
+            write(byte);
+        }
+        std::memset(buffer_, 0, sizeof(buffer_));
+    }
+private:
+    uint8_t buffer_[(128 * 64)/8];
+    int fd_;
+};
 
-    constexpr static auto heart PROGMEM = factory.make_bitmap<15, 12>(
-        0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0,
-        0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-        0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
-        0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,
-        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0
-    );
-    // constexpr auto heart = factory.make_bitmap<15, 4>(
-    //     0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0,
-    //     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    //     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    //     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-    // );
-    // const auto h_image = factory.make_image(msgui::Position{0, 0}, font.get('H'));
-    // const auto image2 = factory.make_image(msgui::Position{32, 32}, bitmap);
-    const auto heart_image = factory.make_image(msgui::Position{72, 32}, heart);
+int app_start()
+{
+    printf("Hello in keychain gamer\n");
+    int pad = open("/dev/pad1", O_RDONLY);
+    int fb = open("/dev/fb0", O_RDONLY);
+    printf("Pad FD %d\n", pad);
+    FbDevice fb_dev(fb);
+    msgui::Factory<decltype(fb_dev)> factory(fb_dev);
+    const auto font = factory.make_font<msgui::fonts::Font5x7>();
+
+    const auto text = factory.make_text("Select game: ", font, {0, 0});
+    auto text_left = factory.make_text("L: ", font, {0, 40});
+    auto text_right = factory.make_text("R: ", font, {40, 40});
+
+    text_left.hide();
+    text_right.hide();
 
     const auto window = factory.configure_window()
-                            .width(lcd.width())
-                            .height(lcd.height())
-                            .make(text, text2, text3, heart_image);
-    (void)(window);
-    itoa(freeRam(), data, 10);
-    Serial::write("Free ram: ");
-    Serial::write(data);
-    Serial::write("\n");
-    Serial::write("Created window\n");
-    window.draw();
-    Serial::write("Windown drawn\n");
+                            .width(128)
+                            .height(64)
+                            .make(text, text_left, text_right);
 
-    // frame_buffer.draw();
-    Serial::write("Frame drawn\n");
+    drivers::GamepadEvent event;
 
-    while (true)
+    // uint8_t some_data[] = { 0xa, 0x1, 0x2, 0x3, 0xff, 0xff};
+    while (read_event(pad, &event))
     {
-        board::gpio::LED_GREEN::setHigh();
-        hal::time::sleep(std::chrono::seconds(1));
-        board::gpio::LED_GREEN::setLow();
-        hal::time::sleep(std::chrono::seconds(1));
+        switch (event.type)
+        {
+            case drivers::EventType::Button:
+            {
+                if (event.value)
+                {
+                    printf("Button pressed: %d\n", event.button_number);
+
+                    if (event.button_number == 1)
+                    {
+                        return 0;
+                    }
+                    if (event.button_number == 0)
+                    {
+                        text_left.show();
+                    }
+                    if (event.button_number == 2)
+                    {
+                        text_right.show();
+                    }
+                }
+                else
+                {
+                    if (event.button_number == 0)
+                    {
+                        text_left.hide();
+                    }
+                    if (event.button_number == 2)
+                    {
+                        text_right.hide();
+                    }
+                    printf("Button released: %d\n", event.button_number);
+                }
+            } break;
+            default:
+            {
+            }
+        }
+        window.draw();
     }
+
+    return 0;
 }
+
+} // namespace
+
+REGISTER_APP_AUTOSTART(gamer, &app_start);

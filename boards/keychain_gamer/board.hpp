@@ -11,9 +11,9 @@ namespace board
 {
 namespace gpio
 {
-using BUTTON_LEFT = hal::devices::gpio::PB1::InputType;
-using LED_GREEN = hal::devices::gpio::PB3::OutputType;
-using BUTTON_RIGHT = hal::devices::gpio::PB4::InputType;
+using BUTTON_LEFT = hal::devices::gpio::PB1;
+using LED_GREEN = hal::devices::gpio::PB3;
+using BUTTON_RIGHT = hal::devices::gpio::PB4;
 }
 }
 
