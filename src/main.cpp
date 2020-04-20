@@ -2,8 +2,12 @@
 
 #include <msos/libc/printf.hpp>
 
+#include <stm32f10x_dma.h>
+
 #include <cstring>
 #include <cmath>
+
+#include <hal/time/sleep.hpp>
 
 #include <msgui/Factory.hpp>
 #include <msgui/policies/chunk/SSD1308ChunkPolicy.hpp>
@@ -47,9 +51,9 @@ public:
         return 64;
     }
 
-    void write(uint8_t byte)
+    void write()
     {
-        ::write(fd_, &byte, 1);
+        ::write(fd_, &buffer_, sizeof(buffer_));
     }
 
     void set_pixel(int x, int y)
@@ -74,10 +78,7 @@ public:
 
     void sync()
     {
-        for (auto byte : buffer_)
-        {
-            write(byte);
-        }
+        write();
         std::memset(buffer_, 0, sizeof(buffer_));
     }
 private:
@@ -110,6 +111,8 @@ int app_start()
     drivers::GamepadEvent event;
 
     // uint8_t some_data[] = { 0xa, 0x1, 0x2, 0x3, 0xff, 0xff};
+    window.draw();
+
     while (read_event(pad, &event))
     {
         switch (event.type)
