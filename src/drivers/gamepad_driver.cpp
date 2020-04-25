@@ -20,10 +20,13 @@
 #include <board.hpp>
 #include <cstring>
 
+#include <msos/libc/printf.hpp>
+
 #include <hal/time/sleep.hpp>
 
 #include <msos/drivers/device_fs.hpp>
 #include <msos/kernel/process/spawn.hpp>
+#include <msos/kernel/process/context_switch.hpp>
 
 #include <msos/kernel/synchronization/mutex.hpp>
 
@@ -46,10 +49,8 @@ void process_function(void* arg)
     UNUSED1(arg);
     while (true)
     {
-        mutex.lock();
         GamepadDriver::get().run();
-        mutex.unlock();
-        hal::time::sleep(std::chrono::milliseconds(40));
+        yield();
     }
 }
 
@@ -84,21 +85,27 @@ void GamepadDriver::run()
     if (state_.left.pressed != key_state)
     {
         state_.left.pressed = key_state;
+        mutex.lock();
         events_.push(GamepadEvent{0, key_state ? static_cast<uint8_t>(0) : static_cast<uint8_t>(1), EventType::Button});
+        mutex.unlock();
     }
     // mid
     key_state = get_button_state(board::gpio::MID_KEY::get());
     if (state_.mid.pressed != key_state)
     {
         state_.mid.pressed = key_state;
+        mutex.lock();
         events_.push(GamepadEvent{1, key_state ? static_cast<uint8_t>(0) : static_cast<uint8_t>(1), EventType::Button});
+        mutex.unlock();
     }
     // right
     key_state = get_button_state(board::gpio::RIGHT_KEY::get());
     if (state_.right.pressed != key_state)
     {
         state_.right.pressed = key_state;
+        mutex.lock();
         events_.push(GamepadEvent{2, key_state ? static_cast<uint8_t>(0) : static_cast<uint8_t>(1), EventType::Button});
+        mutex.unlock();
     }
 }
 

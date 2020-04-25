@@ -1,11 +1,27 @@
+// This file is part of MS keychain gamer project. This is tiny game console.
+// Copyright (C) 2020 Mateusz Stadnik
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 #include <msos/apps/app_registry.hpp>
 
 #include <msos/libc/printf.hpp>
 
-#include <stm32f10x_dma.h>
-
 #include <cstring>
 #include <cmath>
+#include <unistd.h>
+#include <dirent.h>
 
 #include <hal/time/sleep.hpp>
 
@@ -16,104 +32,102 @@
 
 #include <fcntl.h>
 
+#include <msos/kernel/process/spawn.hpp>
+
 #include "drivers/event.hpp"
+#include "io/gamepad.hpp"
+#include "io/display.hpp"
 
 namespace
 {
 
-bool read_event(int fd, drivers::GamepadEvent* event)
-{
-    std::size_t bytes;
-    bytes = read(fd, event, sizeof(drivers::GamepadEvent));
-    if (bytes == sizeof(drivers::GamepadEvent))
-    {
-        return true;
-    }
-    return false;
-}
-
-class FbDevice
-{
-public:
-    FbDevice(int fd)
-        : fd_(fd)
-    {
-        std::memset(buffer_, 0, sizeof(buffer_));
-    }
-
-    int height()
-    {
-        return 128;
-    }
-
-    int width()
-    {
-        return 64;
-    }
-
-    void write()
-    {
-        ::write(fd_, &buffer_, sizeof(buffer_));
-    }
-
-    void set_pixel(int x, int y)
-    {
-        if (x >= height() || y >= width() || x < 0 || y < 0)
-        {
-            return;
-        }
-        int position_in_buffer = x + std::floor(y / 8) * 64;
-        buffer_[position_in_buffer] |= 1 << (y % 8);
-    }
-
-    // void clear_pixel(int x, int y)
-    // {
-    //     if (x >= height() || y >= width() || x < 0 || y < 0)
-    //     {
-    //         return;
-    //     }
-    //     int position_in_buffer = std::floor(x / 8) + y * (128/8);
-    //     buffer_[position_in_buffer] &= ~(1 << (x % 8));
-    // }
-
-    void sync()
-    {
-        write();
-        std::memset(buffer_, 0, sizeof(buffer_));
-    }
-private:
-    uint8_t buffer_[(128 * 64)/8];
-    int fd_;
-};
-
 int app_start()
 {
-    printf("Hello in keychain gamer\n");
-    int pad = open("/dev/pad1", O_RDONLY);
-    int fb = open("/dev/fb0", O_RDONLY);
-    printf("Pad FD %d\n", pad);
-    FbDevice fb_dev(fb);
-    msgui::Factory<decltype(fb_dev)> factory(fb_dev);
+    io::Gamepad& gamepad = io::Gamepad::get();
+    io::Display& display = io::Display::get();
+
+    gamepad.initialize("/dev/pad1");
+    display.initialize("/dev/fb0");
+    {
+    auto factory = display.window_factory();
     const auto font = factory.make_font<msgui::fonts::Font5x7>();
 
     const auto text = factory.make_text("Select game: ", font, {0, 0});
-    auto text_left = factory.make_text("L: ", font, {0, 40});
-    auto text_right = factory.make_text("R: ", font, {40, 40});
+    auto exec_1 = factory.make_text("", font, {7, 8});
+    // auto exec_2 = factory.make_text("", font, {7, 16});
+    // auto exec_3 = factory.make_text("", font, {7, 24});
+    // auto exec_4 = factory.make_text("", font, {7, 32});
 
-    text_left.hide();
-    text_right.hide();
+    constexpr static auto arrow = factory.make_bitmap<5, 7>(
+        0, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,
+        0, 1, 1, 0, 0,
+        0, 1, 1, 1, 0,
+        0, 1, 1, 0, 0,
+        0, 1, 0, 0, 0,
+        0, 0, 0, 0, 0
+    );
 
-    const auto window = factory.configure_window()
+    auto arrow_image = factory.make_image({0, 9}, arrow);
+
+    auto window = factory.configure_window()
                             .width(128)
                             .height(64)
-                            .make(text, text_left, text_right);
+                            .make(text, exec_1, arrow_image);
 
     drivers::GamepadEvent event;
 
     // uint8_t some_data[] = { 0xa, 0x1, 0x2, 0x3, 0xff, 0xff};
-    window.draw();
 
-    while (read_event(pad, &event))
+    DIR *d;
+    struct dirent *dir;
+    char path[]="/bin";
+    d = opendir(path);
+    std::string path_1;
+    std::string path_2;
+    // std::string path_3;
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            if (path_1 == "")
+            {
+                path_1 = dir->d_name;
+            }
+            // else if (path_2 == "")
+            // {
+            //     path_2 = dir->d_name;
+            // }
+            // else if (path_3 == "")
+            // {
+            //     path_3 = dir->d_name;
+            // }
+        }
+        closedir(d);
+    }
+
+    int number_of_positions = 0;
+    if (!path_1.empty())
+    {
+        exec_1.setText(path_1);
+        number_of_positions = 1;
+    }
+
+    // if (!path_2.empty())
+    // {
+    //     exec_2.setText(path_2);
+    //     number_of_positions = 2;
+    // }
+
+    // if (!path_3.empty())
+    // {
+    //     exec_3.setText(path_3);
+    //     number_of_positions = 3;
+    // }
+
+    int current_position = 0;
+    bool stop = false;
+    while (gamepad.read_event(&event) && !stop)
     {
         switch (event.type)
         {
@@ -121,43 +135,65 @@ int app_start()
             {
                 if (event.value)
                 {
-                    printf("Button pressed: %d\n", event.button_number);
 
                     if (event.button_number == 1)
                     {
-                        return 0;
+                        stop = true;
                     }
                     if (event.button_number == 0)
                     {
-                        text_left.show();
+                        auto pos = arrow_image.get_position();
+
+                        if (current_position < number_of_positions - 1)
+                        {
+                            pos.y += 8;
+                            ++current_position;
+                        }
+                        else
+                        {
+                            pos.y = 9;
+                            current_position = 0;
+                        }
+
+                        arrow_image.set_position(pos);
                     }
                     if (event.button_number == 2)
                     {
-                        text_right.show();
+                        auto pos = arrow_image.get_position();
+
+                        if (current_position > 0)
+                        {
+                            pos.y -= 8;
+                            --current_position;
+                        }
+                        else
+                        {
+                            pos.y = (number_of_positions - 1) * 9 + 9;
+                            current_position = number_of_positions - 1;
+                        }
+
+                        arrow_image.set_position(pos);
                     }
                 }
                 else
                 {
-                    if (event.button_number == 0)
-                    {
-                        text_left.hide();
-                    }
-                    if (event.button_number == 2)
-                    {
-                        text_right.hide();
-                    }
-                    printf("Button released: %d\n", event.button_number);
                 }
             } break;
             default:
             {
             }
         }
-        window.draw();
+        window.display();
     }
+    }
+    std::string path = "/bin/space_invaders.bin";
+    exec(path.c_str(), NULL, NULL, NULL);
 
+    gamepad.deinitialize();
+    display.deinitialize();
     return 0;
 }
+
 
 } // namespace
 

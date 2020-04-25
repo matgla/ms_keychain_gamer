@@ -2,12 +2,16 @@
 add_executable(ms_keychain_gamer)
 
 add_subdirectory(drivers)
+add_subdirectory(games)
+add_subdirectory(io)
 
 target_link_libraries(ms_keychain_gamer
     PUBLIC
         hal
         msos_main
         gamer_drivers
+        gamer_io
+        gamer_space_invaders
 )
 
 include (GenerateBinary)

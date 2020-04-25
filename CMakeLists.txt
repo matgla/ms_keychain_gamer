@@ -9,6 +9,9 @@ include (cmake/GitModules.cmake)
 set (user_boards_path ${PROJECT_SOURCE_DIR}/boards CACHE STRING "Path to boards provided from user" FORCE)
 fetch_module_via_branch(lib/msos ${PROJECT_SOURCE_DIR}/lib/msos ${CMAKE_CURRENT_SOURCE_DIR} "master")
 
+message(":INICNICNICNICN: ${msos_system_include_directories}")
+include_directories(BEFORE SYSTEM ${msos_system_include_directories})
+
 enable_language(CXX C ASM)
 
 if (NOT MS_KEYCHAIN_GAMER_BUILD_TESTS)
