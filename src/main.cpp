@@ -94,14 +94,6 @@ int app_start()
             {
                 path_1 = dir->d_name;
             }
-            // else if (path_2 == "")
-            // {
-            //     path_2 = dir->d_name;
-            // }
-            // else if (path_3 == "")
-            // {
-            //     path_3 = dir->d_name;
-            // }
         }
         closedir(d);
     }
@@ -113,22 +105,11 @@ int app_start()
         number_of_positions = 1;
     }
 
-    // if (!path_2.empty())
-    // {
-    //     exec_2.setText(path_2);
-    //     number_of_positions = 2;
-    // }
-
-    // if (!path_3.empty())
-    // {
-    //     exec_3.setText(path_3);
-    //     number_of_positions = 3;
-    // }
-
     int current_position = 0;
     bool stop = false;
     while (gamepad.read_event(&event) && !stop)
     {
+        printf("Gamepad read\n");
         switch (event.type)
         {
             case drivers::EventType::Button:
@@ -183,13 +164,16 @@ int app_start()
             {
             }
         }
+        printf("Display 1\n");
         window.display();
+        printf("Display 2\n");
+
     }
     }
     std::string path = "/bin/space_invaders.bin";
     exec(path.c_str(), NULL, NULL, NULL);
 
-    gamepad.deinitialize();
+    // gamepad.deinitialize();
     display.deinitialize();
     return 0;
 }

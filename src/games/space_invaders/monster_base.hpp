@@ -61,13 +61,6 @@ public:
         position.x = pos.x - position.x;
         position.y = pos.y - position.y;
 
-        printf("pos x: %d\n", position.x);
-        printf("pos y: %d\n", position.y);
-        /*
-        [--]
-        [__]
-        */
-
         return texture_.has_pixel(position);
     }
 
