@@ -34,7 +34,7 @@
 
 #include <msos/kernel/process/spawn.hpp>
 
-#include "drivers/event.hpp"
+#include "drivers/gamepad/event.hpp"
 #include "io/gamepad.hpp"
 #include "io/display.hpp"
 

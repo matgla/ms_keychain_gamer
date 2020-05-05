@@ -14,52 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "io/gamepad.hpp"
+#pragma once
 
-#include <cstdlib>
-
-#include <fcntl.h>
-#include <unistd.h>
-
-#include "drivers/gamepad/event.hpp"
-
-namespace io
+namespace space_invaders
 {
 
-Gamepad& Gamepad::get()
+class MainMenu
 {
-    static Gamepad g;
-    return g;
-}
-
-bool Gamepad::initialize(std::string_view device_path)
-{
-    if (fd_ < 0)
+public:
+    enum class Event
     {
-        fd_ = open(device_path.data(), O_RDONLY);
-    }
-    return fd_ < 0 ? false : true;
-}
+        StartGame
+    };
 
-void Gamepad::deinitialize()
-{
-    if (fd_ >= 0)
-    {
-        close(fd_);
-        fd_ = -1;
-    }
-}
+    void show();
+    void process_event(Event ev);
 
-bool Gamepad::read_event(drivers::GamepadEvent* event)
-{
-    std::size_t bytes;
-    bytes = read(fd_, event, sizeof(drivers::GamepadEvent));
-    if (bytes == sizeof(drivers::GamepadEvent))
-    {
-        return true;
-    }
-    return false;
-}
+private:
+    msgui::Image title_;
+    msgui::Image monster_;
+    msgui::Image press_key_;
 
+};
 
-} // namespace io
+} // namespace space_invaders

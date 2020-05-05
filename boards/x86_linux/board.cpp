@@ -16,33 +16,27 @@
 
 #include "board.hpp"
 
-#include <stm32f10x.h>
-
-#include <devices/arm/stm32/stm32f1/stm32f103c8t6/usart.hpp>
-#include <devices/arm/stm32/stm32f1/stm32f103c8t6/gpio.hpp>
+extern "C"
+{
+    uint32_t _fs_flash_start = 0;
+}
 
 namespace board
 {
 
 namespace interfaces
 {
-    std::array<hal::interfaces::Usart*, 1>& usarts()
-    {
-        static hal::devices::interfaces::Usart1 usart1;
-        static std::array<hal::interfaces::Usart*, 1> usarts_{&usart1};
-        return usarts_;
-    }
+std::array<hal::interfaces::Usart*, 1>& usarts()
+{
+    static hal::devices::interfaces::Usart1 usart1;
+    static std::array<hal::interfaces::Usart*, 1> usarts_{&usart1};
+    return usarts_;
+}
 
-    hal::interfaces::I2C& LCD_I2C()
-    {
-        static hal::devices::interfaces::I2C_1 i2c;
-        return i2c;
-    }
 }
 
 void board_init()
 {
-    SystemInit();
 }
 
 }

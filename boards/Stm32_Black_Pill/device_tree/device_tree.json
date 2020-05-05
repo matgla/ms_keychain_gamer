@@ -1,0 +1,23 @@
+{
+    "displays": [
+        {
+            "ssd1306": [
+                {
+                    "name": "fb0",
+                    "driver_name": "ssd1306",
+                    "args": ["board::interfaces::LCD_I2C()", "0x3c"]
+                }
+            ]
+        }
+    ],
+    "character": [
+        {
+            "usart": [
+                {
+                    "name": "tty1",
+                    "driver_name": "usart1"
+                }
+            ]
+        }
+    ]
+}

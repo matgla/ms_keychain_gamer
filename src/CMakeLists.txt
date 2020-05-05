@@ -8,6 +8,7 @@ add_subdirectory(io)
 target_link_libraries(ms_keychain_gamer
     PUBLIC
         hal
+        msos
         msos_main
         gamer_drivers
         gamer_io

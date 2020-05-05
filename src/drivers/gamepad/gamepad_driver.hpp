@@ -22,7 +22,7 @@
 
 #include <vector>
 
-#include "drivers/event.hpp"
+#include "drivers/gamepad/event.hpp"
 
 namespace drivers
 {

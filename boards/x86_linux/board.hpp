@@ -1,4 +1,4 @@
-// This file is part of MS keychain gamer project. This is tiny game console.
+// This file is part of MS Keychain Gamer project. This is tiny game console.
 // Copyright (C) 2020 Mateusz Stadnik
 //
 // This program is free software: you can redistribute it and/or modify
@@ -16,29 +16,26 @@
 
 #pragma once
 
-#include <string_view>
+/* This file describes hardware configuration, existing input and output peripherals */
 
-#include <msos/fs/read_only_character_file.hpp>
+#include <array>
 
-#include "drivers/gamepad_driver.hpp"
+#include <devices/x86/linux/usart.hpp>
+#include <devices/x86/linux/i2c.hpp>
 
-namespace drivers
+namespace board
 {
 
-class GamepadFile : public msos::fs::ReadOnlyCharacterFile
+void board_init();
+
+namespace gpio
 {
-public:
-    GamepadFile(GamepadDriver& driver, std::string_view path);
-    ssize_t read(DataType data) override;
-    int close() override;
 
-    std::string_view name() const override;
+}
 
-    std::unique_ptr<IFile> clone() const override;
-private:
-    GamepadDriver& driver_;
-    std::string_view path_;
-};
+namespace interfaces
+{
+    std::array<hal::interfaces::Usart*, 1>& usarts();
+}
 
-} // namespace drivers
-
+}

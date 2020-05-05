@@ -14,52 +14,47 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "io/gamepad.hpp"
+#include "drivers/gamepad/gamepad_file.hpp"
 
-#include <cstdlib>
+#include <cstring>
 
-#include <fcntl.h>
-#include <unistd.h>
+#include <eul/utils/unused.hpp>
 
-#include "drivers/gamepad/event.hpp"
 
-namespace io
+namespace drivers
 {
 
-Gamepad& Gamepad::get()
+GamepadFile::GamepadFile(GamepadDriver& driver, std::string_view path)
+    : driver_(driver)
+    , path_(path)
 {
-    static Gamepad g;
-    return g;
 }
 
-bool Gamepad::initialize(std::string_view device_path)
+int number = 0;
+ssize_t GamepadFile::read(DataType data)
 {
-    if (fd_ < 0)
+    if (data.size() < sizeof(GamepadEvent))
     {
-        fd_ = open(device_path.data(), O_RDONLY);
+        return 0;
     }
-    return fd_ < 0 ? false : true;
+    drivers::GamepadEvent ev = driver_.get_event();
+    std::memcpy(data.data(), &ev, sizeof(GamepadEvent));
+    return sizeof(GamepadEvent);
 }
-
-void Gamepad::deinitialize()
+int GamepadFile::close()
 {
-    if (fd_ >= 0)
-    {
-        close(fd_);
-        fd_ = -1;
-    }
+    return 0;
 }
 
-bool Gamepad::read_event(drivers::GamepadEvent* event)
+std::string_view GamepadFile::name() const
 {
-    std::size_t bytes;
-    bytes = read(fd_, event, sizeof(drivers::GamepadEvent));
-    if (bytes == sizeof(drivers::GamepadEvent))
-    {
-        return true;
-    }
-    return false;
+    return path_;
 }
 
+std::unique_ptr<msos::fs::IFile> GamepadFile::clone() const
+{
+    return std::make_unique<GamepadFile>(*this);
+}
 
-} // namespace io
+} // namespace drivers
+

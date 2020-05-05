@@ -49,11 +49,9 @@ namespace interfaces
 {
 
 /* Usart interface exists for debugging purposes, in future maybe usb will be available ? */
-extern std::array<hal::interfaces::Usart*, 1> usarts;
-
+std::array<hal::interfaces::Usart*, 1>& usarts();
 /* SSD OLED screen will be connected via I2C interface */
-extern hal::interfaces::I2C* LCD_I2C;
-// std::array<hal::interfaces::I2C, 1> i2cs;
+hal::interfaces::I2C& LCD_I2C();
 
 }
 

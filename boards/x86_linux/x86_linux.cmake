@@ -16,43 +16,52 @@
 
 function(get_device_info mcu mcu_family arch vendor)
     message(STATUS "Configuration of board: KeychainGamer")
-    set(${mcu} "STM32F103C8T6" PARENT_SCOPE)
-    set(${mcu_family} "STM32F1xx" PARENT_SCOPE)
-    set(${arch} "ARM" PARENT_SCOPE)
-    set(${vendor} "STM32" PARENT_SCOPE)
+    set(${mcu} "X86" PARENT_SCOPE)
+    set(${mcu_family} "X86" PARENT_SCOPE)
+    set(${arch} "X86" PARENT_SCOPE)
+    set(${vendor} "X86" PARENT_SCOPE)
 endfunction()
 
 
 function(get_linker_script linker_script linker_scripts_directory)
-    set (${linker_script} ${user_boards_path}/Stm32_Black_Pill/linker_script.ld PARENT_SCOPE)
-    set (${linker_scripts_directory} ${user_boards_path}/Stm32_Black_Pill PARENT_SCOPE)
+    set (${linker_scripts_directory} ${user_boards_path}/x86_linux PARENT_SCOPE)
 endfunction()
 
 function(add_device_hal_library hal_device_library)
-    message(STATUS "Configuring STM32_Black_Pill")
+    message(STATUS "Configuring x86_linux")
     set(hal_device_library board PARENT_SCOPE)
     add_library(board STATIC)
 
     target_sources(board PUBLIC
         PUBLIC
-            ${user_boards_path}/Stm32_Black_Pill/board.hpp
+            ${user_boards_path}/x86_linux/board.hpp
         PRIVATE
-            ${user_boards_path}/Stm32_Black_Pill/board.cpp
+            ${user_boards_path}/x86_linux/board.cpp
     )
 
     target_include_directories(board PUBLIC
-        ${user_boards_path}/Stm32_Black_Pill
+        ${user_boards_path}/x86_linux
         ${PROJECT_SOURCE_DIR}/src)
 
 
     target_link_libraries(board
         PUBLIC
             hal_interface
-            hal_devices_arm_stm32f103c8t6
+            hal_x86_linux
     )
 
-    include(${PROJECT_SOURCE_DIR}/devices/arm/stm32/stm32f1/stm32f103c8t6/configure_stm32f103c8t6.cmake)
+    include(${PROJECT_SOURCE_DIR}/devices/x86/linux/configure_linux.cmake)
     configure_device()
+    set(board_path ${user_boards_path}/x86_linux CACHE STRING "Path to board configuration files" FORCE)
 
-    set(board_path ${user_boards_path}/Stm32_Black_Pill CACHE STRING "Path to board configuration files" FORCE)
+    add_library(hal_flags INTERFACE)
+    set(hal_cxx_compilation_flags "-std=c++2a;" CACHE INTERNAL "HAL CXX FLAGS")
+
+    target_compile_options(hal_flags INTERFACE
+        $<$<COMPILE_LANGUAGE:CXX>:${hal_cxx_compilation_flags}>
+        $<$<CONFIG:DEBUG>:-Og -g>
+        $<$<CONFIG:RELEASE>:-Os>
+    )
+
+
 endfunction()

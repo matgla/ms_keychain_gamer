@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "drivers/gamepad_driver.hpp"
+#include "drivers/gamepad/gamepad_driver.hpp"
 
 #include <memory>
 #include <board.hpp>
@@ -32,7 +32,7 @@
 
 #include <eul/utils/unused.hpp>
 
-#include "drivers/gamepad_file.hpp"
+#include "drivers/gamepad/gamepad_file.hpp"
 
 namespace drivers
 {
@@ -126,7 +126,7 @@ std::unique_ptr<msos::fs::IFile> GamepadDriver::file(std::string_view path)
     return std::make_unique<drivers::GamepadFile>(*this, path);
 }
 
-REGISTER_DRIVER(pad1, GamepadDriver);
+REGISTER_DRIVER(pad1, GamepadDriver::get());
 
 } // namespace drivers
 

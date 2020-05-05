@@ -26,15 +26,15 @@ namespace space_invaders
 class MonsterLine
 {
 public:
-    MonsterLine(uint16_t left_boundary, uint16_t right_boundary)
+    MonsterLine(msgui::Position position, uint16_t left_boundary, uint16_t right_boundary)
         : left_boundary_(left_boundary)
         , right_boundary_(right_boundary)
         , line_{
-            Monster1({0, 0}, 0, 128),
-            Monster1({10, 0}, 0, 128),
-            Monster1({20, 0}, 0, 128),
-            Monster1({30, 0}, 0, 128),
-            Monster1({40, 0}, 0, 128)
+            Monster1({0 + position.x, 0 + position.y}, 0, 128),
+            Monster1({10 + position.x, 0 + position.y}, 0, 128),
+            Monster1({20 + position.x, 0 + position.y}, 0, 128),
+            Monster1({30 + position.x, 0 + position.y}, 0, 128),
+            Monster1({40 + position.x, 0 + position.y}, 0, 128)
         }
     {
     }

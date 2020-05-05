@@ -14,47 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "drivers/gamepad_file.hpp"
+#pragma once
 
-#include <cstring>
+#include <string_view>
 
-#include <eul/utils/unused.hpp>
+#include <msos/fs/read_only_character_file.hpp>
 
+#include "drivers/gamepad/gamepad_driver.hpp"
 
 namespace drivers
 {
 
-GamepadFile::GamepadFile(GamepadDriver& driver, std::string_view path)
-    : driver_(driver)
-    , path_(path)
+class GamepadFile : public msos::fs::ReadOnlyCharacterFile
 {
-}
+public:
+    GamepadFile(GamepadDriver& driver, std::string_view path);
+    ssize_t read(DataType data) override;
+    int close() override;
 
-int number = 0;
-ssize_t GamepadFile::read(DataType data)
-{
-    if (data.size() < sizeof(GamepadEvent))
-    {
-        return 0;
-    }
-    drivers::GamepadEvent ev = driver_.get_event();
-    std::memcpy(data.data(), &ev, sizeof(GamepadEvent));
-    return sizeof(GamepadEvent);
-}
-int GamepadFile::close()
-{
-    return 0;
-}
+    std::string_view name() const override;
 
-std::string_view GamepadFile::name() const
-{
-    return path_;
-}
-
-std::unique_ptr<msos::fs::IFile> GamepadFile::clone() const
-{
-    return std::make_unique<GamepadFile>(*this);
-}
+    std::unique_ptr<IFile> clone() const override;
+private:
+    GamepadDriver& driver_;
+    std::string_view path_;
+};
 
 } // namespace drivers
 

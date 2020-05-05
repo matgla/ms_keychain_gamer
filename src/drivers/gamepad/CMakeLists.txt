@@ -14,38 +14,42 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-add_library(gamer_space_invaders)
+add_library(gamer_drivers_gamepad)
 
-target_sources(gamer_space_invaders
+target_sources(gamer_drivers_gamepad
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/bullet.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/player.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/event.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/gamepad_driver.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/gamepad_file.hpp
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/gamepad_driver.cpp
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/bullet.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/gamepad_file.cpp
 )
 
-target_include_directories(gamer_space_invaders
+target_include_directories(gamer_drivers_gamepad
     PUBLIC
-        ${PROJECT_SOURCE_DIR}/src/games/space_invaders
         ${PROJECT_SOURCE_DIR}/src
 )
 
-target_compile_options(gamer_space_invaders
+target_compile_options(gamer_drivers_gamepad
     PUBLIC
-        $<$<COMPILE_LANGUAGE:CXX>:-std=c++2a -fconstexpr-depth=999999>
+        $<$<COMPILE_LANGUAGE:CXX>:-std=c++2a>
         $<$<CONFIG:DEBUG>:-Og -g>
         $<$<CONFIG:RELEASE>:-Os>
     PRIVATE
         $<$<COMPILE_LANGUAGE:CXX>:-Werror -Wall -Wextra -Wpedantic -Wcast-align -Wunused -Wshadow -Wpointer-arith -Wcast-qual -Wno-missing-braces>
 )
 
-target_link_libraries(gamer_space_invaders
-    PRIVATE
+target_link_libraries(gamer_drivers_gamepad
+    PUBLIC
+        board
+        msos_interface
         hal_flags
-        msgui
-        msos
-        hal
+)
+
+target_link_libraries(gamer_drivers
+    INTERFACE
+        gamer_drivers_gamepad
 )
