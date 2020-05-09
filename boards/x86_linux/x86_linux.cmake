@@ -43,12 +43,12 @@ function(add_device_hal_library hal_device_library)
         ${user_boards_path}/x86_linux
         ${PROJECT_SOURCE_DIR}/src)
 
-
     target_link_libraries(board
         PUBLIC
             hal_interface
             hal_x86_linux
     )
+
 
     include(${PROJECT_SOURCE_DIR}/devices/x86/linux/configure_linux.cmake)
     configure_device()
@@ -63,5 +63,35 @@ function(add_device_hal_library hal_device_library)
         $<$<CONFIG:RELEASE>:-Os>
     )
 
+    add_library(sysconfig STATIC)
+    target_sources(sysconfig PUBLIC
+        PUBLIC
+            ${user_boards_path}/x86_linux/config.hpp
+        PRIVATE
+            ${user_boards_path}/x86_linux/config.cpp
+    )
+
+    target_link_options(sysconfig
+        PUBLIC
+            -Wl,--wrap=write;
+            -Wl,--wrap=open;
+            -Wl,--wrap=read;
+            -Wl,--wrap=kill;
+            -Wl,--wrap=getpid;
+            -Wl,--wrap=close
+    )
+
+
+    target_include_directories(sysconfig PUBLIC
+        ${user_boards_path}/x86_linux
+        ${PROJECT_SOURCE_DIR}/src)
+
+    target_link_libraries(sysconfig
+        PRIVATE
+            msos_kernel_process
+            msos_syscalls
+            msos_arch
+            board
+    )
 
 endfunction()

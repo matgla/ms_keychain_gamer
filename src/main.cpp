@@ -107,9 +107,9 @@ int app_start()
 
     int current_position = 0;
     bool stop = false;
-    while (gamepad.read_event(&event) && !stop)
+    while (!stop)
     {
-        printf("Gamepad read\n");
+        gamepad.read_event(&event);
         switch (event.type)
         {
             case drivers::EventType::Button:
@@ -164,16 +164,13 @@ int app_start()
             {
             }
         }
-        printf("Display 1\n");
         window.display();
-        printf("Display 2\n");
-
     }
     }
     std::string path = "/bin/space_invaders.bin";
     exec(path.c_str(), NULL, NULL, NULL);
 
-    // gamepad.deinitialize();
+    gamepad.deinitialize();
     display.deinitialize();
     return 0;
 }

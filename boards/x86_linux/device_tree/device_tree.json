@@ -1,4 +1,14 @@
 {
+    "displays": [
+        {
+            "sfml": [
+                {
+                    "name": "fb0",
+                    "driver_name": "sfml"
+                }
+            ]
+        }
+    ],
     "character": [
         {
             "usart": [
