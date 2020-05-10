@@ -5,7 +5,7 @@ add_subdirectory(games)
 add_subdirectory(io)
 
 target_link_libraries(ms_keychain_gamer
-    PUBLIC
+    PRIVATE
         hal
         msos
         msos_main

@@ -22,7 +22,7 @@ target_sources(drivers_sfml_simulator
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator_file.hpp
 
-    # PRIVATE
+    PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator_file.cpp
 )
