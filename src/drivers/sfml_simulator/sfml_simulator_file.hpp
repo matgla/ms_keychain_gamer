@@ -1,4 +1,4 @@
-// This file is part of MS Keychain Gamer project. This is tiny game console.
+// This file is part of MSOS project.
 // Copyright (C) 2020 Mateusz Stadnik
 //
 // This program is free software: you can redistribute it and/or modify
@@ -16,29 +16,29 @@
 
 #pragma once
 
-/* This file describes hardware configuration, existing input and output peripherals */
+#include <string_view>
 
-#include <array>
+#include "msos/fs/character_file.hpp"
 
-#include <devices/x86/linux/usart.hpp>
-#include <devices/x86/linux/i2c.hpp>
-#include <devices/x86/linux/gpio.hpp>
-
-namespace board
+namespace drivers
 {
 
-void board_init();
+class SfmlSimulator;
 
-namespace gpio
+struct SfmlFile : public msos::fs::CharacterFile
 {
-    using RIGHT_KEY = hal::gpio::X86ButtonFactory<1>;
-    using MID_KEY = hal::gpio::X86ButtonFactory<2>;
-    using LEFT_KEY = hal::gpio::X86ButtonFactory<3>;
-}
+public:
+    SfmlFile(SfmlSimulator& driver, std::string_view path);
+    ssize_t read(DataType data) override;
+    ssize_t write(const ConstDataType data) override;
+    int close() override;
 
-namespace interfaces
-{
-    std::array<hal::interfaces::Usart*, 1>& usarts();
-}
+    std::string_view name() const override;
 
-}
+    std::unique_ptr<msos::fs::IFile> clone() const override;
+private:
+    SfmlSimulator& driver_;
+    std::string_view path_;
+};
+
+} // namespace drivers

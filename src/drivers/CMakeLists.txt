@@ -16,10 +16,12 @@
 
 add_library(gamer_drivers INTERFACE)
 
-if (ENABLE_GAMEPAD)
-    add_subdirectory(gamepad)
-endif ()
+add_subdirectory(gamepad)
 
 if (ENABLE_KEYBOARD)
     add_subdirectory(keyboard)
 endif ()
+
+if (ENABLE_DRIVERS_SFML_SIMULATOR)
+    add_subdirectory(sfml_simulator)
+endif()

@@ -1,10 +1,12 @@
 {
-    "displays": [
+    "drivers": [
         {
-            "sfml": [
+            "sfml_simulator": [
                 {
                     "name": "fb0",
-                    "driver_name": "sfml"
+                    "driver_name": "sfml_simulator",
+                    "path": "drivers/sfml_simulator",
+                    "namespace": "drivers"
                 }
             ]
         }
