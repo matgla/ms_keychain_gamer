@@ -18,6 +18,8 @@
 
 #include <vector>
 
+#include <optional>
+
 #include "monster1.hpp"
 
 namespace space_invaders
@@ -31,10 +33,10 @@ public:
         , right_boundary_(right_boundary)
         , line_{
             Monster1({0 + position.x, 0 + position.y}, 0, 128),
-            Monster1({10 + position.x, 0 + position.y}, 0, 128),
-            Monster1({20 + position.x, 0 + position.y}, 0, 128),
+            Monster1({15 + position.x, 0 + position.y}, 0, 128),
             Monster1({30 + position.x, 0 + position.y}, 0, 128),
-            Monster1({40 + position.x, 0 + position.y}, 0, 128)
+            Monster1({45 + position.x, 0 + position.y}, 0, 128),
+            Monster1({60 + position.x, 0 + position.y}, 0, 128)
         }
     {
     }
@@ -54,8 +56,28 @@ public:
         return false;
     }
 
+    std::optional<msgui::Position> get_left_edge() const
+    {
+        if (line_.size())
+        {
+            return line_.front().position();
+        }
+
+        return std::optional<msgui::Position>();
+    }
+
+    std::optional<msgui::Position> get_right_edge() const
+    {
+        if (line_.size())
+        {
+            return line_.back().position();
+        }
+
+        return std::optional<msgui::Position>();
+    }
+
     template <typename DriverType>
-    void draw(DriverType& driver)
+    void draw(DriverType& driver) const
     {
         for (auto& monster : line_)
         {
@@ -63,7 +85,12 @@ public:
         }
     }
 
-    int has_collision(const msgui::Position& position)
+    bool empty() const
+    {
+        return line_.empty();
+    }
+
+    int has_collision(const msgui::Position& position) const
     {
         int i = 0;
         for (auto& monster : line_)
@@ -81,6 +108,12 @@ public:
     {
         line_.erase(line_.begin() + id);
     }
+
+    const std::vector<Monster1>& get_monsters() const
+    {
+        return line_;
+    }
+
 
 private:
     uint16_t left_boundary_;

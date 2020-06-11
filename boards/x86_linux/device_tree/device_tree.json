@@ -7,6 +7,18 @@
                     "driver_name": "sfml_simulator",
                     "path": "drivers/sfml_simulator",
                     "namespace": "drivers"
+                },
+                {
+                    "name": "keyboard",
+                    "driver_name": "keyboard_driver",
+                    "path": "drivers/sfml_simulator",
+                    "namespace": "drivers"
+                },
+                {
+                    "name": "dsp1",
+                    "driver_name": "linux_audio",
+                    "path": "drivers/linux_audio",
+                    "namespace": "drivers"
                 }
             ]
         }

@@ -22,6 +22,7 @@ namespace space_invaders
 Player::Player(const msgui::Position& position, uint16_t left_boundary, uint16_t right_boundary)
     : left_boundary_(left_boundary)
     , right_boundary_(right_boundary)
+    , upper_boundary_(right_boundary)
     , texture_(position, pad)
 {
 
@@ -30,7 +31,7 @@ Player::Player(const msgui::Position& position, uint16_t left_boundary, uint16_t
 void Player::move(const msgui::Position& position)
 {
     msgui::Position current_position = texture_.get_position();
-    if (current_position.x + position.x >= left_boundary_ && current_position.x + position.x < (right_boundary_ - texture_.bitmap().width()))
+    if (current_position.x + position.x >= left_boundary_ && current_position.x + position.x <= (right_boundary_ - texture_.bitmap().width()))
     {
         texture_.move(position);
     }
@@ -40,5 +41,14 @@ msgui::Position Player::position() const
 {
     return texture_.get_position();
 }
+
+msgui::Position Player::shot() const
+{
+    auto bullet_position = texture_.get_position();
+    bullet_position.x += space_invaders::pad.width() / 2;
+    bullet_position.y += space_invaders::pad.height() - 1;
+    return bullet_position;
+}
+
 
 } // namespace space_invaders

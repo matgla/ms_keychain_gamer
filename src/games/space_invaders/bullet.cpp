@@ -21,14 +21,22 @@ namespace space_invaders
 
 Bullet::Bullet(const msgui::Position& position, uint16_t upper_boundary)
     : upper_boundary_(upper_boundary)
-    ,texture_(position, bullet)
+    , texture_(position, bullet_bitmap)
 
 {
 }
 
+Bullet& Bullet::operator=(Bullet&& other)
+{
+    upper_boundary_ = std::move(other.upper_boundary_);
+    texture_ = std::move(other.texture_);
+    return *this;
+}
+
+
 bool Bullet::move(const msgui::Position& position)
 {
-    if (texture_.get_position().y + position.y >= 0)
+    if (texture_.get_position().y + position.y >= 0 && texture_.get_position().y + position.y < upper_boundary_)
     {
         texture_.move(position);
         return true;

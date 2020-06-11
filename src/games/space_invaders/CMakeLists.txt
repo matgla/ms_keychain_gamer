@@ -16,14 +16,22 @@
 
 add_library(gamer_space_invaders)
 
+add_subdirectory(assets)
+
 target_sources(gamer_space_invaders
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/bullet.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/game.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/main_menu.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/monsters.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/player.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/bullet.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/game.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/main_menu.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/monsters.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
 )
 
@@ -43,6 +51,8 @@ target_compile_options(gamer_space_invaders
 )
 
 target_link_libraries(gamer_space_invaders
+    PUBLIC
+        assets
     PRIVATE
         hal_flags
         msgui

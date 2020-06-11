@@ -27,8 +27,11 @@
 
 #include <hal/time/sleep.hpp>
 
+#include "msos/os/input/input.h"
 #include "msos/usart_printer.hpp"
 #include "drivers/sfml_simulator/sfml_simulator_file.hpp"
+#include "drivers/sfml_simulator/keyboard_driver.hpp"
+
 
 namespace drivers
 {
@@ -68,7 +71,6 @@ void SfmlSimulator::load()
         right_button.setRadius(button_size);
         right_button.setPosition(button_offset * 3 + button_size * 2, device.getSize().y - button_offset);
 
-        std::cout << window.getSize().x << ", " << window.getSize().y << std::endl;
         while (window.isOpen())
         {
             sf::Event event;
@@ -97,29 +99,64 @@ void SfmlSimulator::load()
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
             {
-                board::gpio::LEFT_KEY::get().setHigh();
-            }
-            else
-            {
                 board::gpio::LEFT_KEY::get().setLow();
             }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            else
             {
-                board::gpio::MID_KEY::get().setHigh();
+                board::gpio::LEFT_KEY::get().setHigh();
+            }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                board::gpio::MID_KEY::get().setLow();
             }
             else
             {
-                board::gpio::MID_KEY::get().setLow();
+                board::gpio::MID_KEY::get().setHigh();
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
             {
-                board::gpio::RIGHT_KEY::get().setHigh();
+                board::gpio::RIGHT_KEY::get().setLow();
             }
             else
             {
-                board::gpio::RIGHT_KEY::get().setLow();
+                board::gpio::RIGHT_KEY::get().setHigh();
+            }
+
+            std::vector<sf::Keyboard::Key> keys {
+                sf::Keyboard::Key::Z,
+                sf::Keyboard::Key::X,
+                sf::Keyboard::Key::C,
+                sf::Keyboard::Key::V,
+                sf::Keyboard::Key::B,
+                sf::Keyboard::Key::N,
+                sf::Keyboard::Key::M,
+                sf::Keyboard::Key::Comma,
+                sf::Keyboard::Key::Period,
+                sf::Keyboard::Key::Slash,
+                sf::Keyboard::Key::A,
+                sf::Keyboard::Key::S,
+                sf::Keyboard::Key::D,
+                sf::Keyboard::Key::F,
+                sf::Keyboard::Key::G,
+                sf::Keyboard::Key::J,
+                sf::Keyboard::Key::K,
+                sf::Keyboard::Key::L,
+                sf::Keyboard::Key::SemiColon,
+                sf::Keyboard::Key::Quote
+            };
+
+            for (const auto key : keys)
+            {
+                if (sf::Keyboard::isKeyPressed(key))
+                {
+                    KeyboardDriver::get().set_key_state(convert_key(key), true);
+                }
+                else
+                {
+                    KeyboardDriver::get().set_key_state(convert_key(key), false);
+                }
             }
         }
     });
@@ -148,6 +185,37 @@ void SfmlSimulator::write(const uint8_t byte)
 
     UNUSED1(byte);
 }
+
+int SfmlSimulator::convert_key(sf::Keyboard::Key key)
+{
+    switch (key)
+    {
+        case sf::Keyboard::Key::Z: return KEY_Z;
+        case sf::Keyboard::Key::X: return KEY_X;
+        case sf::Keyboard::Key::C: return KEY_C;
+        case sf::Keyboard::Key::V: return KEY_V;
+        case sf::Keyboard::Key::B: return KEY_B;
+        case sf::Keyboard::Key::N: return KEY_N;
+        case sf::Keyboard::Key::M: return KEY_M;
+        case sf::Keyboard::Key::Comma: return KEY_COMMA;
+        case sf::Keyboard::Key::Period: return KEY_DOT;
+        case sf::Keyboard::Key::Slash: return KEY_SLASH;
+        case sf::Keyboard::Key::A: return KEY_A;
+        case sf::Keyboard::Key::S: return KEY_S;
+        case sf::Keyboard::Key::D: return KEY_D;
+        case sf::Keyboard::Key::F: return KEY_F;
+        case sf::Keyboard::Key::G: return KEY_G;
+        case sf::Keyboard::Key::H: return KEY_H;
+        case sf::Keyboard::Key::J: return KEY_J;
+        case sf::Keyboard::Key::K: return KEY_K;
+        case sf::Keyboard::Key::L: return KEY_L;
+        case sf::Keyboard::Key::SemiColon: return KEY_SEMICOLON;
+        case sf::Keyboard::Key::Quote: return KEY_APOSTROPHE;
+        default: return KEY_RESERVED;
+        return KEY_RESERVED;
+    }
+}
+
 
 void SfmlSimulator::write(gsl::span<const char> buffer)
 {
@@ -179,8 +247,9 @@ void SfmlSimulator::write(gsl::span<const char> buffer)
     buffer_mutex_.unlock();
 }
 
-std::unique_ptr<msos::fs::IFile> SfmlSimulator::file(std::string_view path)
+std::unique_ptr<msos::fs::IFile> SfmlSimulator::file(std::string_view path, int flags)
 {
+    UNUSED1(flags);
     return std::make_unique<SfmlFile>(*this, path);
 }
 

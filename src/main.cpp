@@ -37,6 +37,7 @@
 #include "drivers/gamepad/event.hpp"
 #include "io/gamepad.hpp"
 #include "io/display.hpp"
+#include "io/button_reader.hpp"
 
 namespace
 {
@@ -50,8 +51,7 @@ int app_start()
     display.initialize("/dev/fb0");
     {
     auto factory = display.window_factory();
-    const auto font = factory.make_font<msgui::fonts::Font5x7>();
-
+    const auto& font = msgui::fonts::Font5x7::data;
     const auto text = factory.make_text("Select game: ", font, {0, 0});
     auto exec_1 = factory.make_text("", font, {7, 8});
     // auto exec_2 = factory.make_text("", font, {7, 16});
@@ -110,66 +110,16 @@ int app_start()
     while (!stop)
     {
         gamepad.read_event(&event);
-        switch (event.type)
+        auto buttons = io::get_buttons(event);
+        if (io::was_button_released(buttons.mid_button))
         {
-            case drivers::EventType::Button:
-            {
-                if (event.value)
-                {
-
-                    if (event.button_number == 1)
-                    {
-                        stop = true;
-                    }
-                    if (event.button_number == 0)
-                    {
-                        auto pos = arrow_image.get_position();
-
-                        if (current_position < number_of_positions - 1)
-                        {
-                            pos.y += 8;
-                            ++current_position;
-                        }
-                        else
-                        {
-                            pos.y = 9;
-                            current_position = 0;
-                        }
-
-                        arrow_image.set_position(pos);
-                    }
-                    if (event.button_number == 2)
-                    {
-                        auto pos = arrow_image.get_position();
-
-                        if (current_position > 0)
-                        {
-                            pos.y -= 8;
-                            --current_position;
-                        }
-                        else
-                        {
-                            pos.y = (number_of_positions - 1) * 9 + 9;
-                            current_position = number_of_positions - 1;
-                        }
-
-                        arrow_image.set_position(pos);
-                    }
-                }
-                else
-                {
-                }
-            } break;
-            default:
-            {
-            }
+            stop = true;
         }
         window.display();
     }
+    std::string game_path = "/bin/space_invaders.bin";
+    exec(game_path.c_str(), NULL, NULL, NULL);
     }
-    std::string path = "/bin/space_invaders.bin";
-    exec(path.c_str(), NULL, NULL, NULL);
-
     gamepad.deinitialize();
     display.deinitialize();
     return 0;
@@ -178,4 +128,4 @@ int app_start()
 
 } // namespace
 
-REGISTER_APP_AUTOSTART(gamer, &app_start);
+REGISTER_APP(gamer, &app_start);

@@ -78,7 +78,9 @@ function(add_device_hal_library hal_device_library)
             -Wl,--wrap=read;
             -Wl,--wrap=kill;
             -Wl,--wrap=getpid;
-            -Wl,--wrap=close
+            -Wl,--wrap=close;
+            -Wl,--wrap=ioctl;
+            -Wl,--wrap=fsync;
     )
 
 
@@ -91,6 +93,8 @@ function(add_device_hal_library hal_device_library)
             msos_kernel_process
             msos_syscalls
             msos_arch
+            msos_os_sys
+            msos_posix
             board
     )
 

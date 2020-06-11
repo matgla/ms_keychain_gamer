@@ -20,6 +20,8 @@
 // #include <msos/kernel/process/scheduler.hpp>
 
 #include <msos/syscalls/syscalls.hpp>
+#include <msos/posix/fsync.hpp>
+#include <msos/os/sys/ioctl.h>
 
 extern "C"
 {
@@ -56,6 +58,15 @@ extern "C"
         return _close(file);
     }
 
+    int __wrap_ioctl(int fd, uint32_t cmd, void* arg)
+    {
+        return _ioctl(fd, cmd, arg);
+    }
+
+    int __wrap_fsync(int fd)
+    {
+        return _fsync(fd);
+    }
 
 }
 

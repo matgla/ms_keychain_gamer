@@ -25,18 +25,18 @@
 namespace io
 {
 
-FbDevice::FbDevice(int fd)
+Framebuffer::Framebuffer(int fd)
     : fd_(fd)
 {
     std::memset(buffer_, 0, sizeof(buffer_));
 }
 
-void FbDevice::write()
+void Framebuffer::write()
 {
     ::write(fd_, &buffer_, sizeof(buffer_));
 }
 
-void FbDevice::set_pixel(int x, int y)
+void Framebuffer::set_pixel(int x, int y)
 {
     if (y >= height() || x >= width() || x < 0 || y < 0)
     {
@@ -46,13 +46,13 @@ void FbDevice::set_pixel(int x, int y)
     buffer_[position_in_buffer] |= 1 << (y % 8);
 }
 
-void FbDevice::sync()
+void Framebuffer::sync()
 {
     write();
     std::memset(buffer_, 0, sizeof(buffer_));
 }
 
-int FbDevice::fd() const
+int Framebuffer::fd() const
 {
     return fd_;
 }

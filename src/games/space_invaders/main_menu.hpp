@@ -16,6 +16,13 @@
 
 #pragma once
 
+#include <msgui/Image.hpp>
+
+#include "assets/main_menu_title.hpp"
+#include "assets/main_menu_monster.hpp"
+#include "assets/main_menu_press_key.hpp"
+#include "io/framebuffer.hpp"
+
 namespace space_invaders
 {
 
@@ -27,13 +34,16 @@ public:
         StartGame
     };
 
+    MainMenu(io::Framebuffer& fb);
+
     void show();
     void process_event(Event ev);
 
 private:
-    msgui::Image title_;
-    msgui::Image monster_;
-    msgui::Image press_key_;
+    io::Framebuffer& fb_;
+    msgui::Image<decltype(main_menu_title)> title_;
+    msgui::Image<decltype(main_menu_monster)> monster_;
+    msgui::Image<decltype(main_menu_press_key)> press_key_;
 
 };
 

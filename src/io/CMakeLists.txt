@@ -18,11 +18,13 @@ add_library(gamer_io)
 
 target_sources(gamer_io
     PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/button_reader.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/display.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/framebuffer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/gamepad.hpp
 
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/button_reader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/display.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/framebuffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/gamepad.cpp

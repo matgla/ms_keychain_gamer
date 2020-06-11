@@ -33,14 +33,22 @@
 
 #include "io/display.hpp"
 #include "io/gamepad.hpp"
+#include "io/button_reader.hpp"
 
 #include "player.hpp"
 #include "monster_line.hpp"
 #include "bullet.hpp"
 
-#include "assets/main_menu_title.hpp"
-#include "assets/main_menu_monster.hpp"
-#include "assets/main_menu_press_key.hpp"
+#include "main_menu.hpp"
+#include "game.hpp"
+
+enum class State
+{
+    MainMenu,
+    StartGame,
+    Game,
+    GameOver
+};
 
 static int app()
 {
@@ -52,7 +60,7 @@ static int app()
     drivers::GamepadEvent event;
 
     auto factory = display.window_factory();
-
+    State state = State::MainMenu;
     // space_invaders::Player player(msgui::Position{(window_width - space_invaders::pad.width()) / 2, window_height - space_invaders::pad.height()}, 0 , window_width);
 
     auto window = factory.configure_window()
@@ -60,12 +68,8 @@ static int app()
                         .height(window_height)
                         .make();
 
-    msgui::Image menu_image({0, 0}, space_invaders::main_menu_title);
-    msgui::Image menu_monster_image({100, 0}, space_invaders::main_menu_monster);
-    msgui::Image menu_press_key_image({42, 50}, space_invaders::main_menu_press_key);
-
-    // bool left_pressed = false;
-    // bool right_pressed = false;
+    space_invaders::MainMenu menu(display.get_fb());
+    space_invaders::Game game(display.get_fb());
     // int fps = 0;
 
     // std::optional<space_invaders::Bullet> bullet;
@@ -77,8 +81,69 @@ static int app()
     //     space_invaders::MonsterLine({20, 34}, 0, 128)};
     // std::chrono::milliseconds tt = hal::time::Time::milliseconds();
     // int move_position = 4;
+    int score = 0;
     while (gamepad.read_event(&event))
     {
+        io::ButtonsState buttons = io::get_buttons(event);
+
+        switch (state)
+        {
+            case State::MainMenu:
+            {
+                if (io::was_button_released(buttons.mid_button)
+                    || io::was_button_released(buttons.left_button)
+                    || io::was_button_released(buttons.right_button)
+                )
+                {
+                    printf("Starting gane\n");
+                    state = State::StartGame;
+                }
+                menu.show();
+            } break;
+            case State::StartGame:
+            {
+                state = State::Game;
+                game.initialize();
+            } break;
+            case State::Game:
+            {
+                score = game.finished();
+                if (score)
+                {
+                    state = State::GameOver;
+                    break;
+                }
+                if (io::was_button_pressed(buttons.left_button))
+                {
+                    game.process_event(space_invaders::Game::Event::move_left_start);
+                }
+                else if (io::was_button_released(buttons.left_button))
+                {
+                    game.process_event(space_invaders::Game::Event::move_left_stop);
+                }
+
+                if (io::was_button_pressed(buttons.right_button))
+                {
+                    game.process_event(space_invaders::Game::Event::move_right_start);
+                }
+                else if (io::was_button_released(buttons.right_button))
+                {
+                    game.process_event(space_invaders::Game::Event::move_right_stop);
+                }
+
+
+                if (io::was_button_pressed(buttons.mid_button))
+                {
+                    game.process_event(space_invaders::Game::Event::gunfire);
+                }
+                game.process_event(space_invaders::Game::Event::game_step);
+                game.show();
+            } break;
+            case State::GameOver:
+            {
+                printf("Game over with score: %d\n", score);
+            }
+        }
         // // printf("Loop\n");
         // switch (event.type)
         // {
@@ -159,9 +224,7 @@ static int app()
         // {
         //     monsters.draw(display.get_fb());
         // }
-        menu_image.draw(display.get_fb());
-        menu_monster_image.draw(display.get_fb());
-        menu_press_key_image.draw(display.get_fb());
+
         window.display();
 
         // if (hal::time::Time::milliseconds() - tt >= std::chrono::seconds(1))

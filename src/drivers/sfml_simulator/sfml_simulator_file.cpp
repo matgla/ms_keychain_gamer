@@ -22,9 +22,6 @@
 
 #include "drivers/sfml_simulator/sfml_simulator.hpp"
 
-
-#include <iostream>
-
 namespace drivers
 {
 

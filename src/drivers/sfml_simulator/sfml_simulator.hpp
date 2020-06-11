@@ -59,9 +59,11 @@ public:
     void write(const uint8_t byte);
     void write(gsl::span<const char> buffer);
 
-    std::unique_ptr<msos::fs::IFile> file(std::string_view path) override;
+    std::unique_ptr<msos::fs::IFile> file(std::string_view path, int flags) override;
 
 private:
+
+    int convert_key(sf::Keyboard::Key key);
 
     std::mutex buffer_mutex_;
     std::unique_ptr<uint8_t> buffer_;

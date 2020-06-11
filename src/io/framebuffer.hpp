@@ -21,10 +21,10 @@
 namespace io
 {
 
-class FbDevice
+class Framebuffer
 {
 public:
-    FbDevice(int fd);
+    Framebuffer(int fd);
 
     constexpr int height()
     {

@@ -30,12 +30,12 @@ public:
     bool initialize(std::string_view device);
     void deinitialize();
 
-    msgui::Factory<io::FbDevice> window_factory();
+    msgui::Factory<io::Framebuffer> window_factory();
 
-    FbDevice& get_fb();
+    Framebuffer& get_fb();
 private:
     Display();
-    FbDevice* fb_;
+    Framebuffer* fb_;
 };
 
 } // namespace io

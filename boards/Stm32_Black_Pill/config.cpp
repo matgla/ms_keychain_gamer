@@ -19,6 +19,16 @@
 #include <arch/armv7-m/normal_scheduler.hpp>
 #include <msos/kernel/process/scheduler.hpp>
 
+#include <msos/posix/fsync.hpp>
+
+extern "C"
+{
+    int fsync(int fd)
+    {
+        return _fsync(fd);
+    }
+}
+
 namespace msos
 {
 

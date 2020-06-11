@@ -53,8 +53,7 @@ public:
 
     GamepadEvent get_event();
 
-
-    std::unique_ptr<msos::fs::IFile> file(std::string_view path) override;
+    std::unique_ptr<msos::fs::IFile> file(std::string_view path, int flags) override;
 private:
     GamepadDriver();
     GamepadState state_;

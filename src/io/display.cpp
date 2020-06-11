@@ -41,7 +41,7 @@ bool Display::initialize(std::string_view device)
         int fd = open(device.data(), O_RDONLY);
         if (fd >= 0)
         {
-            static io::FbDevice fb(fd);
+            static io::Framebuffer fb(fd);
             fb_ = &fb;
         }
     }
@@ -57,14 +57,14 @@ void Display::deinitialize()
     }
 }
 
-FbDevice& Display::get_fb()
+Framebuffer& Display::get_fb()
 {
     return *fb_;
 }
 
-msgui::Factory<io::FbDevice> Display::window_factory()
+msgui::Factory<io::Framebuffer> Display::window_factory()
 {
-    return msgui::Factory<io::FbDevice>(*fb_);
+    return msgui::Factory<io::Framebuffer>(*fb_);
 }
 
 } // namespace io

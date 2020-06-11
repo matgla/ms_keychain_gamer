@@ -39,9 +39,17 @@ namespace drivers
 
 static msos::kernel::synchronization::Mutex mutex;
 
+bool get_button_state(hal::gpio::DigitalInputOutputPin& pin)
+{
+    return pin.read();
+}
+
+
 GamepadDriver::GamepadDriver()
 {
-    std::memset(&state_, 0, sizeof(GamepadState));
+    state_.left.pressed =  get_button_state(board::gpio::LEFT_KEY::get());
+    state_.mid.pressed =  get_button_state(board::gpio::MID_KEY::get());
+    state_.right.pressed =  get_button_state(board::gpio::RIGHT_KEY::get());
 }
 
 void process_function(void* arg)
@@ -74,10 +82,6 @@ GamepadDriver& GamepadDriver::get()
     return d;
 }
 
-bool get_button_state(hal::gpio::DigitalInputOutputPin& pin)
-{
-    return pin.read();
-}
 
 void GamepadDriver::run()
 {
@@ -121,8 +125,9 @@ GamepadEvent GamepadDriver::get_event()
     return ev;
 }
 
-std::unique_ptr<msos::fs::IFile> GamepadDriver::file(std::string_view path)
+std::unique_ptr<msos::fs::IFile> GamepadDriver::file(std::string_view path, int flags)
 {
+    UNUSED1(flags);
     return std::make_unique<drivers::GamepadFile>(*this, path);
 }
 

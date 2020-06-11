@@ -45,7 +45,7 @@ public:
     }
 
     template <typename DriverType>
-    void draw(DriverType& driver)
+    void draw(DriverType& driver) const
     {
         texture_.draw(driver);
     }
@@ -71,6 +71,16 @@ public:
         texture_ = other.texture_;
         return *this;
     }
+
+    msgui::Position shot() const
+    {
+        auto bullet_position = texture_.get_position();
+
+        bullet_position.x += texture_.sprite_width() / 2;
+        bullet_position.y += texture_.bitmap().height() - 1;
+        return bullet_position;
+    }
+
 private:
     short int left_boundary_;
     short int right_boundary_;

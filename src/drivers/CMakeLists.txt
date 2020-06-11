@@ -25,3 +25,7 @@ endif ()
 if (ENABLE_DRIVERS_SFML_SIMULATOR)
     add_subdirectory(sfml_simulator)
 endif()
+
+if (ENABLE_DRIVERS_LINUX_AUDIO)
+    add_subdirectory(linux_audio)
+endif()

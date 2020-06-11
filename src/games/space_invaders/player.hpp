@@ -47,10 +47,12 @@ public:
     }
 
     msgui::Position position() const;
+    msgui::Position shot() const;
 
 private:
     short int left_boundary_;
     short int right_boundary_;
+    short int upper_boundary_;
     msgui::Image<decltype(pad)> texture_;
 };
 

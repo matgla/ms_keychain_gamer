@@ -21,9 +21,13 @@ target_sources(drivers_sfml_simulator
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator_file.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/keyboard_driver.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/keyboard_driver_file.hpp
 
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/keyboard_driver.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/keyboard_driver_file.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sfml_simulator_file.cpp
 )
 

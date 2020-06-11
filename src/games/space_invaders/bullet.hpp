@@ -24,7 +24,7 @@
 namespace space_invaders
 {
 
-constexpr static auto bullet = msgui::factory::make_bitmap<1, 3>(
+constexpr static auto bullet_bitmap = msgui::factory::make_bitmap<1, 3>(
     1,
     1,
     1
@@ -34,6 +34,9 @@ class Bullet
 {
 public:
     Bullet(const msgui::Position& position, uint16_t upper_boundary);
+
+    Bullet& operator=(Bullet&& bullet);
+
     bool move(const msgui::Position& position);
 
     template <typename DriverType>
@@ -48,7 +51,7 @@ public:
     }
 private:
     short int upper_boundary_;
-    msgui::Image<decltype(bullet)> texture_;
+    msgui::Image<decltype(bullet_bitmap)> texture_;
 };
 
 } // namespace space_invaders

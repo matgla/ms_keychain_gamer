@@ -12,6 +12,7 @@ target_link_libraries(ms_keychain_gamer
         gamer_drivers
         gamer_io
         gamer_space_invaders
+        synth
 )
 
 include (GenerateBinary)
