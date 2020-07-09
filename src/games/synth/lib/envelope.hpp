@@ -17,13 +17,37 @@
 #pragma once
 
 #include <cstdint>
+#include <optional>
+
+#include "synth/lib/note.hpp"
 
 namespace synth
 {
 
+struct EnvelopeParameters
+{
+public:
+    EnvelopeParameters()
+        : sustain_amplitude(0)
+        , max_amplitude(0)
+        , attack_time(0)
+        , decay_time(0)
+        , release_time(0)
+    {
+    }
+
+    uint8_t sustain_amplitude;
+    uint8_t max_amplitude;
+
+    uint16_t attack_time;
+    uint16_t decay_time;
+    uint16_t release_time;
+};
+
 class Envelope
 {
 public:
+    Envelope(EnvelopeParameters params);
     Envelope();
 
     void on();
@@ -31,36 +55,39 @@ public:
 
     constexpr Envelope& attack_time(int time)
     {
-        attack_ = time;
+        params_.attack_time = time;
         return *this;
     }
 
     constexpr Envelope& max_amplitude(int amplitude)
     {
-        start_amplitude_ = amplitude;
+        params_.max_amplitude = amplitude;
         return *this;
     }
 
     constexpr Envelope& sustain_amplitude(int amplitude)
     {
-        sustain_amplitude_ = amplitude;
+        params_.sustain_amplitude = amplitude;
         return *this;
     }
 
     constexpr Envelope& decay_time(int time)
     {
-        decay_ = time;
+        params_.decay_time = time;
         return *this;
     }
 
     constexpr Envelope& release_time(int time)
     {
-        release_ = time;
+        params_.release_time = time;
         return *this;
     }
 
+    bool is_idle() const;
+    bool is_finished(Note note, uint32_t time) const;
 
     int process(int time);
+    std::optional<int> process(uint32_t start_time, uint32_t stop_time, uint32_t time);
 private:
     enum class State
     {
@@ -75,14 +102,10 @@ private:
 
     int start_time_;
     int stop_time_;
-    int start_amplitude_;
-    int sustain_amplitude_;
-    int attack_;
-    int decay_;
-    int sustain_;
-    int release_;
+    EnvelopeParameters params_;
 
     State state_;
+    State prev_state_;
 };
 
 } // namespace synth

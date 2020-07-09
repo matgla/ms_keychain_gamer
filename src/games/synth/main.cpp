@@ -2,74 +2,92 @@
 
 #include <msos/os/input/input.h>
 
+#include "lib/envelope.hpp"
+
 #include "sound_generator.hpp"
+#include "lib/channel.hpp"
+#include "lib/instruments/bell.hpp"
 
 double frequency = 440.0;
 
-uint8_t generate_sound(double delta_time)
-{
-    double val = (sin(delta_time * 2.0 * 3.14 * frequency) + 1) / 2;
-    uint8_t out = 255 * val;
+synth::Channel channel(std::make_unique<synth::instruments::Bell>());
 
-    return out;
+namespace
+{
+    constexpr uint32_t sample_rate = 8000;
 }
 
-constexpr std::array<uint32_t, 32> notes{
-    261, // C4
-    277, // C4#
-    293, // D4
-    311, // D4#
-    329, // E4
-    349, // F4
-    369, // F4#
-    392, // G4
-    415, // G4#
-    449, // A4
-    466, // A4#
-    493, // B4
-    523, // C5
-    554, // C5#
-    587, // D5
-    622, // D5#
-    659, // E5
-    698, // F5
-    739, // F5#
-    783, // G5
-    830, // G5#
-    880, // A5
-    932, // A5#
-    987, // B5
-};
+uint32_t current_time = 0;
+uint8_t generate_sound(uint32_t delta_time/* ticks */)
+{
+    // uint8_t val = env.process(delta_time * 1000) * (sin(delta_time * 2.0 * 3.14 * frequency) + 1) / 2;
+    current_time = delta_time;
+
+    auto val = channel.get_sound(current_time, sample_rate);
+    return val;
+}
+
+// constexpr std::array<uint32_t, 32> notes{
+ //     261, // C4
+//     277, // C4#
+//     293, // D4
+//     311, // D4#
+//     329, // E4
+//     349, // F4
+//     369, // F4#
+//     392, // G4
+//     415, // G4#
+//     449, // A4
+//     466, // A4#
+//     493, // B4
+//     523, // C5
+//     554, // C5#
+//     587, // D5
+//     622, // D5#
+//     659, // E5
+//     698, // F5
+//     739, // F5#
+//     783, // G5
+//     830, // G5#
+//     880, // A5
+//     932, // A5#
+//     987, // B5
+// };
+
+uint32_t get_frequency(int id)
+{
+    return 256 * pow(1.0594630943592952645618252949463, id);
+}
 
 uint32_t get_key_frequency(input_event ev)
 {
     uint32_t freq = 0;
     switch (ev.code)
     {
-        case keys::KEY_Z: freq = notes[0]; break;
-        case keys::KEY_S: freq = notes[1]; break;
-        case keys::KEY_X: freq = notes[2]; break;
-        case keys::KEY_D: freq = notes[3]; break;
-        case keys::KEY_C: freq = notes[4]; break;
-        case keys::KEY_V: freq = notes[5]; break;
-        case keys::KEY_G: freq = notes[6]; break;
-        case keys::KEY_B: freq = notes[7]; break;
-        case keys::KEY_H: freq = notes[8]; break;
-        case keys::KEY_N: freq = notes[9]; break;
-        case keys::KEY_J: freq = notes[10]; break;
-        case keys::KEY_M: freq = notes[11]; break;
-        case keys::KEY_COMMA: freq = notes[12]; break;
-        case keys::KEY_L: freq = notes[13]; break;
-        case keys::KEY_DOT: freq = notes[14]; break;
-        case keys::KEY_SEMICOLON: freq = notes[15]; break;
-        case keys::KEY_SLASH: freq = notes[16]; break;
+        case keys::KEY_Z: freq = 0; break;
+        case keys::KEY_S: freq = 1; break;
+        case keys::KEY_X: freq = 2; break;
+        case keys::KEY_D: freq = 3; break;
+        case keys::KEY_C: freq = 4; break;
+        case keys::KEY_V: freq = 5; break;
+        case keys::KEY_G: freq = 6; break;
+        case keys::KEY_B: freq = 7; break;
+        case keys::KEY_H: freq = 8; break;
+        case keys::KEY_N: freq = 9; break;
+        case keys::KEY_J: freq = 10; break;
+        case keys::KEY_M: freq = 11; break;
+        case keys::KEY_COMMA: freq = 12; break;
+        case keys::KEY_L: freq = 13; break;
+        case keys::KEY_DOT: freq = 14; break;
+        case keys::KEY_SEMICOLON: freq = 15; break;
+        case keys::KEY_SLASH: freq = 16; break;
     }
     return freq;
 }
 
 int synth_app()
 {
-    SoundGenerator<uint8_t> generator("/dev/dsp1", 8000, 1, 2, 512);
+    SoundGenerator<uint8_t> generator("/dev/dsp1", sample_rate, 1, 3, 512);
 
     printf("  C4  c4# D  D#   E    F    F#  G  G#  A  A#  H     C   C#  D  D#  E \n");
     printf(" _____________________________________________________________________\n");
@@ -101,6 +119,7 @@ int synth_app()
     }
     fsync(keyboard);
     input_event ev;
+    // channel.get_note(1)->on(current_time);
     while (true)
     {
         read(keyboard, &ev, sizeof(input_event));
@@ -108,13 +127,20 @@ int synth_app()
         {
             if (ev.value)
             {
-                frequency = get_key_frequency(ev);
+                auto* note = channel.add_note(synth::Note(get_key_frequency(ev)));
+                if (note)
+                {
+                    printf("On\n");
+                    note->on(current_time);
+                }
             }
             else
             {
-                if (frequency == get_key_frequency(ev))
+                auto* note = channel.get_note(get_key_frequency(ev));
+                if (note)
                 {
-                    frequency = 0;
+                    printf("Off\n");
+                    note->off(current_time);
                 }
             }
 
@@ -123,4 +149,4 @@ int synth_app()
     }
 }
 
-REGISTER_APP(synth_app, &synth_app);
+REGISTER_APP_AUTOSTART(synth_app, &synth_app);

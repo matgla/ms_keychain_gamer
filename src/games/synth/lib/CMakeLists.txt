@@ -18,10 +18,22 @@ add_library(synthlib)
 
 target_sources(synthlib
     PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/instruments/bell.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/oscillators/oscillator.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/oscillators/sine.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/channel.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/envelope.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/instrument.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/note_frequency.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/note.hpp
 
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/instruments/bell.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/oscillators/sine.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/channel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/envelope.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/note_frequency.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/note.cpp
 )
 
 target_include_directories(synthlib

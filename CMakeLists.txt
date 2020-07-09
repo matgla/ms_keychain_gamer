@@ -13,17 +13,12 @@ include_directories(BEFORE SYSTEM ${msos_system_include_directories})
 
 enable_language(CXX C ASM)
 
-if (NOT MS_KEYCHAIN_GAMER_BUILD_TESTS)
-    include(SetCompilationSystem)
-    set_compilation_target()
-    message (STATUS "Building: target")
-    add_subdirectory(src)
+include(SetCompilationSystem)
+set_compilation_target()
+message (STATUS "Building: target")
+add_subdirectory(src)
 
-else ()
-    message (STATUS "Building: test")
-endif ()
-
-if (NOT MS_KEYCHAIN_GAMER_DISABLE_TESTS)
+if (NOT DISABLE_TESTS)
     message ("Adding UT tests")
     enable_testing()
     add_subdirectory(test/ut)

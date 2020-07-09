@@ -19,33 +19,53 @@
 namespace synth
 {
 
+Envelope::Envelope(EnvelopeParameters params)
+    : start_time_(0)
+    , stop_time_(0)
+    , params_(params)
+    , state_(State::Off)
+{
+}
+
 Envelope::Envelope()
     : start_time_(0)
     , stop_time_(0)
-    , start_amplitude_(0)
-    , sustain_amplitude_(0)
-    , attack_(0)
-    , decay_(0)
-    , sustain_(0)
-    , release_(0)
     , state_(State::Off)
 {
-
 }
 
 void Envelope::on()
 {
+
+    if (state_ != State::Off)
+    {
+        return;
+    }
+    start_time_ = 0;
+    stop_time_ = 0;
     state_ = State::StartTriggered;
 }
 
+bool Envelope::is_idle() const
+{
+    return state_ == State::Off;
+}
+
+
 void Envelope::off()
 {
+    if (stop_time_ != 0)
+    {
+        return;
+    }
+    prev_state_ = state_;
     state_ = State::ReleaseTriggered;
 }
 
 int Envelope::process(int time)
 {
     int lifetime = time - start_time_;
+    int out = 0;
 
     switch (state_)
     {
@@ -58,46 +78,63 @@ int Envelope::process(int time)
         }
         case State::Attack:
         {
-            if (lifetime <= attack_)
+            if (lifetime <= params_.attack_time)
             {
-                if (attack_ == 0)
+                if (params_.attack_time == 0)
                 {
-                    return start_amplitude_;
+                    return params_.max_amplitude;
                 }
-                return (lifetime * start_amplitude_) / attack_;
+                out = (lifetime * params_.max_amplitude) / params_.attack_time;
+                break;
             }
             state_ = State::Decay;
             [[fallthrough]];
         }
         case State::Decay:
         {
-            if (lifetime <= attack_ + decay_)
+            if (lifetime <= params_.attack_time + params_.decay_time)
             {
-                if (decay_ == 0)
+                if (params_.decay_time == 0)
                 {
-                    return sustain_amplitude_;
+                    return params_.sustain_amplitude;
                 }
-                return (lifetime - attack_) * (sustain_amplitude_ - start_amplitude_) / decay_ + start_amplitude_;
+                out = (lifetime - params_.attack_time) * (params_.sustain_amplitude - params_.max_amplitude) / params_.decay_time + params_.max_amplitude;
+                break;
             }
             state_ = State::Sustain;
             [[fallthrough]];
         }
         case State::Sustain:
         {
-            return sustain_amplitude_;
+            if (stop_time_ != 0)
+            {
+                stop_time_ = lifetime;
+                state_ = State::Release;
+            }
+
+            return params_.sustain_amplitude;
+
         }
         case State::ReleaseTriggered:
         {
-            state_ = State::Release;
-            stop_time_ = time;
+            if (prev_state_ != State::Sustain)
+            {
+                state_ = prev_state_;
+            }
+            else
+            {
+                state_ = State::Release;
+            }
+            stop_time_ = lifetime;
 
             [[fallthrough]];
         }
         case State::Release:
         {
-            if (lifetime <= stop_time_ + release_)
+            if (lifetime <= stop_time_ + params_.release_time)
             {
-                return (lifetime - stop_time_) * -1 * sustain_amplitude_ / release_ + sustain_amplitude_;
+                out = (lifetime - stop_time_) * -1 * params_.sustain_amplitude / params_.release_time + params_.sustain_amplitude;
+                break;
             }
             state_ = State::Off;
             [[fallthrough]];
@@ -107,7 +144,68 @@ int Envelope::process(int time)
             return 0;
         }
     }
-    return 0;
+    if (out < 0)
+    {
+        return 0;
+    }
+    return out;
 }
+
+std::optional<int> Envelope::process(uint32_t start_time, uint32_t stop_time, uint32_t time)
+{
+    uint32_t lifetime = time - start_time;
+    int out = 0;
+    // uint32_t stop = 0;
+
+    if (lifetime <= params_.attack_time)
+    {
+        if (params_.attack_time == 0)
+        {
+            return params_.max_amplitude;
+        }
+        out = (lifetime * params_.max_amplitude) / params_.attack_time;
+    }
+    else if (lifetime <= params_.attack_time + params_.decay_time)
+    {
+        if (params_.decay_time == 0)
+        {
+            return params_.sustain_amplitude;
+        }
+        out = (lifetime - params_.attack_time) * (params_.sustain_amplitude - params_.max_amplitude) / params_.decay_time + params_.max_amplitude;
+    }
+    else if (stop_time == 0)
+    {
+        if (stop_time)
+        {
+        }
+        return params_.sustain_amplitude;
+    }
+    else if (lifetime <= stop_time + params_.release_time)
+    {
+        out = 0;//(lifetime - stop_time) * -1 * params_.sustain_amplitude / params_.release_time + params_.sustain_amplitude;
+    }
+    else
+    {
+        return {};
+    }
+    return out < 0 ? 0 : out;
+}
+
+bool Envelope::is_finished(Note note, uint32_t time) const
+{
+    if (note.stop_time() != 0)
+    {
+        uint32_t lifetime = time - note.start_time();
+        uint32_t envelope_time = params_.attack_time + params_.decay_time + params_.release_time;
+        if (lifetime < envelope_time)
+        {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+
 
 } // namespace synth

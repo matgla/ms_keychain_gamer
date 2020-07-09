@@ -96,14 +96,14 @@ public:
         for (std::size_t i = 0; i < buffer_.size(); ++i)
         {
             buffer_[i] = sound_function_(time_);
-            time_ += 1/(double)(sample_rate_);
+            ++time_;
         }
 
         write(fd_, buffer_.data(), buffer_.size());
 
     }
 
-    void set_function(SampleType (*sound_fun)(double))
+    void set_function(SampleType (*sound_fun)(uint32_t))
     {
         sound_function_ = sound_fun;
     }
@@ -116,7 +116,7 @@ private:
     int number_of_writes_;
     std::vector<SampleType> buffer_;
     int fd_;
-    SampleType (*sound_function_)(double);
-    double time_;
+    SampleType (*sound_function_)(uint32_t);
+    uint32_t time_;
     std::string_view output_device_;
 };

@@ -26,6 +26,7 @@ target_sources(synth
 target_include_directories(synth
     PUBLIC
         ${PROJECT_SOURCE_DIR}/src/games/synth
+        ${PROJECT_SOURCE_DIR}/src/games
         ${PROJECT_SOURCE_DIR}/src
 )
 
